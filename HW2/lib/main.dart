@@ -55,7 +55,7 @@ class StudentInfo extends StatelessWidget {
               const SizedBox(height: 20),
               // Student name
               const Text(
-                "Name: KAINAPAT",
+                "Name: KAINAPAT ",
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -64,7 +64,7 @@ class StudentInfo extends StatelessWidget {
               const SizedBox(height: 10),
               // Student lastname
               const Text(
-                "Last name: SUWANNACHOTE",
+                "Last name: SUWANNACHOTE ",
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
