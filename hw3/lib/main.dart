@@ -1,65 +1,72 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(ATMApp());
+  runApp(MyApp());
 }
 
-class ATMApp extends StatelessWidget {
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'ATM-1999',
       debugShowCheckedModeBanner: false,
-      home: ATMHomePage(),
+      home: ATMApp(),
     );
   }
 }
 
-class ATMHomePage extends StatefulWidget {
+class ATMApp extends StatefulWidget {
   @override
-  _ATMHomePageState createState() => _ATMHomePageState();
+  _ATMAppState createState() => _ATMAppState();
 }
 
-class _ATMHomePageState extends State<ATMHomePage> {
-  double balance = 0.0;
-  double selectedAmount = 0.0;
-  String message = '';
+class _ATMAppState extends State<ATMApp> {
+  int balance = 0;
+  int money = 0;
+  String state = 'Your money is';
 
-  void deposit(double amount) {
+  void depositMoney() {
     setState(() {
-      balance += amount;
-      message = 'Deposit Complete';
+      balance += money;
+      state = 'Deposit Complete';
+      money = 0;
     });
   }
 
-  void withdraw(double amount) {
+  void withdrawMoney() {
+    if (balance >= money) {
+      setState(() {
+        balance -= money;
+        state = 'Withdraw Complete';
+        money = 0;
+      });
+    } else {
+      setState(() {
+        state = 'Your balance not enough!';
+      });
+    }
+  }
+
+  void selectMoney(int amount) {
     setState(() {
-      if (balance >= amount) {
-        balance -= amount;
-        message = 'Withdraw Complete';
-      } else {
-        message = 'Your balance is not enough!';
-      }
+      money = amount;
+      state = 'Your money is';
     });
   }
 
-  Widget amountButton(double amount) {
+  Widget amountButton(int amount, Function(int) onPressed) {
     return ElevatedButton(
-      onPressed: () {
-        setState(() {
-          selectedAmount = amount;
-          message = 'Your money is ${selectedAmount.toInt()}';
-        });
-      },
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.blue,
-        foregroundColor: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0),
-        ),
-        padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      onPressed: () => onPressed(amount),
+      child: Text(
+        amount.toString(),
+        style: TextStyle(color: Colors.white),
       ),
-      child: Text('${amount.toInt()}', style: TextStyle(fontSize: 14)),
+      style: ElevatedButton.styleFrom(
+        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+        backgroundColor: Color.fromARGB(255, 87, 161, 222),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+      ),
     );
   }
 
@@ -67,8 +74,11 @@ class _ATMHomePageState extends State<ATMHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('ATM-1999'),
-        backgroundColor: Color(0xFFB39DDB),
+        title: Text(
+          'ATM-1999',
+          style: TextStyle(color: Color.fromARGB(200, 0, 0, 0)),
+        ),
+        backgroundColor: Color.fromARGB(255, 179, 157, 219),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -78,61 +88,81 @@ class _ATMHomePageState extends State<ATMHomePage> {
           children: [
             Text(
               'Your Balance is',
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 28),
             ),
             Text(
-              '${balance.toInt()}',
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+              '$balance',
+              style: TextStyle(fontSize: 28),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 32),
             Text(
-              message.isNotEmpty ? message : 'Your money is ${selectedAmount.toInt()}',
-              style: TextStyle(fontSize: 25, color: Colors.grey[700]),
+              '$state',
+              style: TextStyle(fontSize: 28),
             ),
-            SizedBox(height: 20),
-            GridView.count(
-              shrinkWrap: true,
-              crossAxisCount: 3,
-              crossAxisSpacing: 8,
-              mainAxisSpacing: 8,
-              childAspectRatio: 2.5,
+            Text(
+              '$money',
+              style: TextStyle(fontSize: 28),
+            ),
+            SizedBox(height: 32),
+            Column(
               children: [
-                amountButton(1000),
-                amountButton(2000),
-                amountButton(3000),
-                amountButton(4000),
-                amountButton(5000),
-                amountButton(6000),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    amountButton(1000, selectMoney),
+                    SizedBox(width: 10),
+                    amountButton(2000, selectMoney),
+                    SizedBox(width: 10),
+                    amountButton(3000, selectMoney),
+                  ],
+                ),
+                SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    amountButton(4000, selectMoney),
+                    SizedBox(width: 10),
+                    amountButton(5000, selectMoney),
+                    SizedBox(width: 10),
+                    amountButton(6000, selectMoney),
+                  ],
+                ),
               ],
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton.icon(
-                  onPressed: () {
-                    if (selectedAmount > 0) {
-                      deposit(selectedAmount);
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                  ),
+                  onPressed: depositMoney,
                   icon: Icon(Icons.add, color: Colors.white),
-                  label: Text('Deposit', style: TextStyle(color: Colors.white)),
-                ),
-                SizedBox(width: 20),
-                ElevatedButton.icon(
-                  onPressed: () {
-                    if (selectedAmount > 0) {
-                      withdraw(selectedAmount);
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red,
+                  label: Text(
+                    'deposit',
+                    style: TextStyle(color: Colors.white),
                   ),
-                  icon: Icon(Icons.delete, color: Colors.white),
-                  label: Text('Withdraw', style: TextStyle(color: Colors.white)),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromARGB(255, 0, 97, 4),
+                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 16),
+                ElevatedButton.icon(
+                  onPressed: withdrawMoney,
+                  icon: Icon(Icons.delete_outline, color: Colors.white),
+                  label: Text(
+                    'withdraw',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 255, 17, 0),
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                  ),
                 ),
               ],
             ),
