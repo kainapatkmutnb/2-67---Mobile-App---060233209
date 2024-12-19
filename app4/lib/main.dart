@@ -114,7 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
           AlertDialog alert = AlertDialog(
             title: const Text("สรุปการสั่งซื้อ"),
             content: Text(
-              "$orderSummary\nจำนวนจานทั้งหมด: $totalQuantity\nราคาทั้งหมด: $totalPrice บาท",
+              "$orderSummary\nจำนวนทั้งหมด: $totalQuantity\nราคาทั้งหมด: $totalPrice บาท",
             ),
           );
           showDialog(
