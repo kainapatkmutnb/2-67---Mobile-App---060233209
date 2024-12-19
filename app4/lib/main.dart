@@ -15,12 +15,11 @@ class MyApp extends StatelessWidget {
       title: "Food Menu",
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color.fromARGB(255, 77, 172, 226)),
+          seedColor: const Color.fromARGB(255, 77, 172, 226),
+        ),
         useMaterial3: true,
       ),
-      home: const MyHomePage(
-        title: "Food Menu",
-      ),
+      home: const MyHomePage(title: "Food Menu"),
     );
   }
 }
@@ -74,25 +73,24 @@ class _MyHomePageState extends State<MyHomePage> {
           return ListTile(
             leading: Image.asset(food.img),
             title: Text(
-              "${index + 1}. " + food.name,
-              style: TextStyle(fontSize: 30),
+              "${index + 1}. ${food.name}",
+              style: const TextStyle(fontSize: 30),
             ),
             subtitle: Text(
-              "ราคา " + food.price + " บาท",
-              style: TextStyle(fontSize: 20),
+              "ราคา ${food.price} บาท",
+              style: const TextStyle(fontSize: 20),
             ),
             onTap: () {
               _incrementQuantity(index);
               AlertDialog alert = AlertDialog(
                 title: Text("คุณเลือกเมนู: ${food.name}"),
                 content: Text(
-                    "จำนวน: ${foodQuantity[index] ?? 0} จาน\nราคา: ${(foodQuantity[index] ?? 0) * int.parse(food.price)} บาท"),
+                  "จำนวน: ${foodQuantity[index] ?? 0} จาน\nราคา: ${(foodQuantity[index] ?? 0) * int.parse(food.price)} บาท",
+                ),
               );
               showDialog(
                 context: context,
-                builder: (BuildContext context) {
-                  return alert;
-                },
+                builder: (BuildContext context) => alert,
               );
             },
           );
@@ -100,16 +98,28 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          String orderSummary = "";
+          foodQuantity.forEach((index, quantity) {
+            if (quantity > 0) {
+              foodmenu food = menu[index];
+              orderSummary +=
+                  "${food.name} จำนวน: $quantity จาน ราคา: ${quantity * int.parse(food.price)} บาท\n";
+            }
+          });
+
+          if (orderSummary.isEmpty) {
+            orderSummary = "ไม่มีการสั่งซื้อ";
+          }
+
           AlertDialog alert = AlertDialog(
-            title: Text("สรุปการสั่งซื้อ"),
+            title: const Text("สรุปการสั่งซื้อ"),
             content: Text(
-                "จำนวนจานทั้งหมด: $totalQuantity\nราคาทั้งหมด: $totalPrice บาท"),
+              "$orderSummary\nจำนวนจานทั้งหมด: $totalQuantity\nราคาทั้งหมด: $totalPrice บาท",
+            ),
           );
           showDialog(
             context: context,
-            builder: (BuildContext context) {
-              return alert;
-            },
+            builder: (BuildContext context) => alert,
           );
         },
         tooltip: "สรุปการสั่งซื้อ",
