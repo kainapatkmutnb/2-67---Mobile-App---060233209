@@ -122,7 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     Map<String, int> refundBreakdown = _calculateRefund(cardBalance);
-    String refundDetails = "ยอดเงินที่ต้องคืน: $cardBalance บาท\n\n";
+    String refundDetails = "ยอดเงินที่ต้องทอน $cardBalance บาท\n\n";
     refundBreakdown.forEach((denomination, count) {
       if (count > 0) {
         if (int.parse(denomination) >= 20) {
@@ -136,7 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
     showDialog(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text("รายละเอียดการคืนเงิน"),
+        title: const Text("รายละเอียดการทอนเงิน"),
         content: Text(refundDetails),
         actions: [
           TextButton(
@@ -146,7 +146,7 @@ class _MyHomePageState extends State<MyHomePage> {
               });
               Navigator.pop(context);
             },
-            child: const Text("ยืนยันการคืนเงิน"),
+            child: const Text("ยืนยันการทอนเงิน"),
           ),
         ],
       ),
@@ -292,7 +292,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: ElevatedButton.icon(
                         icon: const Icon(Icons.delete_outline),
                         label: const Text(
-                          "คืนเงิน",
+                          "ทอนเงิน",
                           style: TextStyle(fontSize: 18),
                         ),
                         style: ElevatedButton.styleFrom(
