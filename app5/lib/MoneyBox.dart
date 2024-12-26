@@ -1,21 +1,33 @@
 import 'package:flutter/material.dart';
 
 class MoneyBox extends StatelessWidget {
+  String title;
+  double amount;
+  double sizeConHeight;
+  Color colrSet;
+
+  MoneyBox(
+    this.title,
+    this.amount,
+    this.sizeConHeight,
+    this.colrSet,
+  );
+
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(20.0),
-      height: 130,
+      height: sizeConHeight,
       decoration: BoxDecoration(
-        color: Colors.blue,
+        color: colrSet,
         borderRadius: BorderRadius.circular(20),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: const [
+        children: [
           Text(
-            "Balance  ",
-            style: TextStyle(
+            title,
+            style: const TextStyle(
               fontSize: 30,
               fontWeight: FontWeight.bold,
               color: Colors.white,
@@ -23,8 +35,8 @@ class MoneyBox extends StatelessWidget {
           ),
           Expanded(
             child: Text(
-              "20000",
-              style: TextStyle(
+              amount.toString(),
+              style: const TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
