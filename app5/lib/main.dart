@@ -49,16 +49,66 @@ class _MyHomePageState extends State<MyHomePage> {
         padding: const EdgeInsets.all(10.0),
         child: Column(
           children: [
-            MoneyBox('Balance', 30000, 120, Colors.lightBlue),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+              height: 120,
+              padding: const EdgeInsets.all(20.0),
+              decoration: BoxDecoration(
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                color: Colors.grey.shade50,
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: const Offset(0, 3),
+                ),
+              ],
+              ),
+              child: InputDecoratorExample(),
+            ),
+            MoneyBox('Balance', 30000, 100, Colors.lightBlue),
             SizedBox(height: 5),
-            MoneyBox('Income', 10000, 100, Colors.green),
+            MoneyBox('Income', 10000, 80, Colors.green),
             SizedBox(height: 5),
-            MoneyBox('Expenses', 80000, 100, Colors.orange),
+            MoneyBox('Expenses', 80000, 80, Colors.orange),
             SizedBox(height: 5),
-            MoneyBox('Debt', 40000, 100, Colors.deepOrange),
+            MoneyBox('Debt', 40000, 80, Colors.deepOrange),
+            TextButton(
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.black,
+                backgroundColor: const Color.fromARGB(255, 114, 178, 207),
+              ),
+              onPressed: () {
+                
+              },
+                child: const Text(
+                "Summit",
+                style: TextStyle(fontSize: 30),
+                ),
+            )
           ],
         ),
       ),
+    );
+  }
+}
+
+class InputDecoratorExample extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      decoration: InputDecoration(
+        border: const OutlineInputBorder(),
+        labelText: 'Enter your Account name',
+      ),
+      validator: (String? value) {
+        if (value == null || value == '') {
+          return 'Please enter Account name';
+        }
+        return null;
+      },
+      autovalidateMode: AutovalidateMode.always,
     );
   }
 }
