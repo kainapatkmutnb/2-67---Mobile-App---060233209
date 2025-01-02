@@ -56,19 +56,75 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Radio(
-                  value: 1,
-                  groupValue: img,
-                  onChanged: (int? value) {
-                    setState(() {
-                      img = 1;
-                    });
-                  },
+                Row(
+                  children: [
+                    Radio(
+                      value: 1,
+                      groupValue: img,
+                      onChanged: (int? value) {
+                        setState(() {
+                          img = 1;
+                        });
+                      },
+                    ),
+                    const CircleAvatar(
+                      radius: 20,
+                      backgroundImage: AssetImage('assets/images/ig.png'),
+                    ),
+                  ],
                 ),
-                const CircleAvatar(
-                  radius: 20,
-                  backgroundImage: AssetImage('assets/images/ig.png'),
+                Row(
+                  children: [
+                    Radio(
+                      value: 2,
+                      groupValue: img,
+                      onChanged: (int? value) {
+                        setState(() {
+                          img = 2;
+                        });
+                      },
+                    ),
+                    const CircleAvatar(
+                      radius: 20,
+                      backgroundImage: AssetImage('assets/images/line.png'),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Radio(
+                      value: 3,
+                      groupValue: img,
+                      onChanged: (int? value) {
+                        setState(() {
+                          img = 3;
+                        });
+                      },
+                    ),
+                    const CircleAvatar(
+                      radius: 20,
+                      backgroundImage: AssetImage('assets/images/man.png'),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Radio(
+                      value: 4,
+                      groupValue: img,
+                      onChanged: (int? value) {
+                        setState(() {
+                          img = 4;
+                        });
+                      },
+                    ),
+                    const CircleAvatar(
+                      radius: 20,
+                      backgroundImage: AssetImage('assets/images/marvel.jpeg'),
+                    ),
+                  ],
                 ),
               ],
             ),
