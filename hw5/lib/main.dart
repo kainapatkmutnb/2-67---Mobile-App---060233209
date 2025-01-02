@@ -23,6 +23,15 @@ class MyApp extends StatelessWidget {
   }
 }
 
+class Data {
+  int id;
+  String name;
+  DateTime t;
+  String imagePath;
+
+  Data(this.id, this.name, this.t, this.imagePath);
+}
+
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
 
@@ -32,18 +41,17 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class Data {
-  late int id;
-  late String name;
-  late DateTime t;
-  Data(this.id, this.name, this.t);
-}
-
 class _MyHomePageState extends State<MyHomePage> {
   String txt = 'N/A';
   List<Data> mylist = <Data>[];
   int img = 0;
-  var list = ['one', 'two', 'three', 'four'];
+
+  final List<Map<String, String>> icons = [
+    {'id': '1', 'path': 'assets/images/ig.png'},
+    {'id': '2', 'path': 'assets/images/line.png'},
+    {'id': '3', 'path': 'assets/images/man.png'},
+    {'id': '4', 'path': 'assets/images/marvel.jpeg'},
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -57,84 +65,38 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Row(
+              children: icons.map((icon) {
+                int index = int.parse(icon['id']!);
+                return Row(
                   children: [
                     Radio(
-                      value: 1,
+                      value: index,
                       groupValue: img,
                       onChanged: (int? value) {
                         setState(() {
-                          img = 1;
+                          img = value!;
                         });
                       },
                     ),
-                    const CircleAvatar(
+                    CircleAvatar(
                       radius: 20,
-                      backgroundImage: AssetImage('assets/images/ig.png'),
+                      backgroundImage: AssetImage(icon['path']!),
                     ),
                   ],
-                ),
-                Row(
-                  children: [
-                    Radio(
-                      value: 2,
-                      groupValue: img,
-                      onChanged: (int? value) {
-                        setState(() {
-                          img = 2;
-                        });
-                      },
-                    ),
-                    const CircleAvatar(
-                      radius: 20,
-                      backgroundImage: AssetImage('assets/images/line.png'),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Radio(
-                      value: 3,
-                      groupValue: img,
-                      onChanged: (int? value) {
-                        setState(() {
-                          img = 3;
-                        });
-                      },
-                    ),
-                    const CircleAvatar(
-                      radius: 20,
-                      backgroundImage: AssetImage('assets/images/man.png'),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Radio(
-                      value: 4,
-                      groupValue: img,
-                      onChanged: (int? value) {
-                        setState(() {
-                          img = 4;
-                        });
-                      },
-                    ),
-                    const CircleAvatar(
-                      radius: 20,
-                      backgroundImage: AssetImage('assets/images/marvel.jpeg'),
-                    ),
-                  ],
-                ),
-              ],
+                );
+              }).toList(),
             ),
-            const TextField(),
+            const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
-                setState(() {
-                  txt = 'Add item Success';
-                  mylist.add(Data(img, '1', DateTime.now()));
-                });
+                if (img != 0) {
+                  setState(() {
+                    String imagePath = icons
+                        .firstWhere((icon) => icon['id'] == img.toString())['path']!;
+                    mylist.add(Data(img, 'Title Text ($img)', DateTime.now(), imagePath));
+                    txt = 'Add item Success';
+                  });
+                }
               },
               child: const Text('Add Item'),
             ),
@@ -142,6 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
               txt,
               textScaleFactor: 2,
             ),
+            const SizedBox(height: 10),
             SizedBox(
               width: double.infinity,
               height: 550,
@@ -158,19 +121,21 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       color: Colors.primaries[index % Colors.primaries.length],
                       child: ListTile(
-                        leading: const CircleAvatar(
+                        leading: CircleAvatar(
                           radius: 30,
-                          backgroundImage: AssetImage('assets/images/icon2.png'),
+                          backgroundImage: AssetImage(mylist[index].imagePath),
                         ),
-                        title: Text('Title Text (${mylist[index].id})'),
+                        title: Text(mylist[index].name),
                         subtitle: Text(mylist[index].t.toString()),
-                        trailing: const Icon(Icons.delete_rounded),
-                        onTap: () {
-                          setState(() {
-                            txt = 'Title Text ($index) is removed';
-                            mylist.removeAt(index);
-                          });
-                        },
+                        trailing: IconButton(
+                          icon: const Icon(Icons.delete_rounded),
+                          onPressed: () {
+                            setState(() {
+                              mylist.removeAt(index);
+                              txt = 'Item Removed';
+                            });
+                          },
+                        ),
                       ),
                     ),
                   );
