@@ -11,7 +11,9 @@ class MoneyBox extends StatelessWidget {
     this.title,
     this.amount,
     this.sizeConHeight,
-    this.colrSet, {super.key},
+    this.colrSet, 
+    {super.key}
+
   );
 
   @override
