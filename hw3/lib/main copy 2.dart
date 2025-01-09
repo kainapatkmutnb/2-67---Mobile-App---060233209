@@ -5,6 +5,8 @@ void main() {
 }
 
 class ATMApp extends StatelessWidget {
+  const ATMApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -16,6 +18,8 @@ class ATMApp extends StatelessWidget {
 }
 
 class ATMHomePage extends StatefulWidget {
+  const ATMHomePage({super.key});
+
   @override
   _ATMHomePageState createState() => _ATMHomePageState();
 }
@@ -57,9 +61,9 @@ class _ATMHomePageState extends State<ATMHomePage> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8.0),
         ),
-        padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
       ),
-      child: Text('${amount.toInt()}', style: TextStyle(fontSize: 14)),
+      child: Text('${amount.toInt()}', style: const TextStyle(fontSize: 14)),
     );
   }
 
@@ -67,8 +71,8 @@ class _ATMHomePageState extends State<ATMHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('ATM-1999'),
-        backgroundColor: Color(0xFFB39DDB),
+        title: const Text('ATM-1999'),
+        backgroundColor: const Color(0xFFB39DDB),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -76,20 +80,20 @@ class _ATMHomePageState extends State<ATMHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               'Your Balance is',
               style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
             ),
             Text(
               '${balance.toInt()}',
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Text(
               message.isNotEmpty ? message : 'Your money is ${selectedAmount.toInt()}',
               style: TextStyle(fontSize: 25, color: Colors.grey[700]),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             GridView.count(
               shrinkWrap: true,
               crossAxisCount: 3,
@@ -105,7 +109,7 @@ class _ATMHomePageState extends State<ATMHomePage> {
                 amountButton(6000),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -118,10 +122,10 @@ class _ATMHomePageState extends State<ATMHomePage> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green,
                   ),
-                  icon: Icon(Icons.add, color: Colors.white),
-                  label: Text('Deposit', style: TextStyle(color: Colors.white)),
+                  icon: const Icon(Icons.add, color: Colors.white),
+                  label: const Text('Deposit', style: TextStyle(color: Colors.white)),
                 ),
-                SizedBox(width: 20),
+                const SizedBox(width: 20),
                 ElevatedButton.icon(
                   onPressed: () {
                     if (selectedAmount > 0) {
@@ -131,8 +135,8 @@ class _ATMHomePageState extends State<ATMHomePage> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.red,
                   ),
-                  icon: Icon(Icons.delete_outline, color: Colors.white),
-                  label: Text('Withdraw', style: TextStyle(color: Colors.white)),
+                  icon: const Icon(Icons.delete_outline, color: Colors.white),
+                  label: const Text('Withdraw', style: TextStyle(color: Colors.white)),
                 ),
               ],
             ),

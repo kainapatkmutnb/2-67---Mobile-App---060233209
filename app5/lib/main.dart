@@ -95,6 +95,8 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class InputDecoratorExample extends StatelessWidget {
+  const InputDecoratorExample({super.key});
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(

@@ -3,7 +3,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter/material.dart';
 
 class Activity extends StatefulWidget {
-  const Activity({Key? key}) : super(key: key);
+  const Activity({super.key});
 
   @override
   State<Activity> createState() => _ActivityState();

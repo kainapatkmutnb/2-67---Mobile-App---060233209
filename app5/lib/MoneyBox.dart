@@ -11,7 +11,7 @@ class MoneyBox extends StatelessWidget {
     this.title,
     this.amount,
     this.sizeConHeight,
-    this.colrSet,
+    this.colrSet, {super.key},
   );
 
   @override
@@ -37,7 +37,7 @@ class MoneyBox extends StatelessWidget {
           ),
           Expanded(
             child: Text(
-              '${NumberFormat("#,###.###").format(amount)}',
+              NumberFormat("#,###.###").format(amount),
               style: const TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.bold,

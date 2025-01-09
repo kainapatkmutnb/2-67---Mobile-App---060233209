@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -9,7 +9,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'KAINAPXT',
         home: MyHomepage());
@@ -30,30 +30,30 @@ class _MyHomepageState extends State<MyHomepage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("HELLO G"),
+        title: const Text("HELLO G"),
         backgroundColor: Colors.lightBlue[100],
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               "Press the button to get a number",
               style: TextStyle(
                 fontSize: 40,
                 fontWeight: FontWeight.bold,
-                color: const Color.fromARGB(255, 226, 68, 68),
+                color: Color.fromARGB(255, 226, 68, 68),
                 letterSpacing: 2.0,
               ),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Text(
               number.toString(),
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 80,
                 fontWeight: FontWeight.bold,
-                color: const Color.fromARGB(255, 131, 207, 226),
+                color: Color.fromARGB(255, 131, 207, 226),
                 fontStyle: FontStyle.italic,
               ),
             )
@@ -66,8 +66,8 @@ class _MyHomepageState extends State<MyHomepage> {
             number++;
           });
         },
-        child: Icon(Icons.add),
         backgroundColor: const Color.fromARGB(255, 113, 162, 202),
+        child: Icon(Icons.add),
       ),
     );
   }

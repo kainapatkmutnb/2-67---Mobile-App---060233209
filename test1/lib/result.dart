@@ -12,76 +12,66 @@ class ResultPage extends StatelessWidget {
     required this.currency,
   });
 
-  double convertCurrency(String currency, double amount) {
-    switch (currency) {
-      case 'USD': // US Dollar
-        return amount / 34; // Conversion rate for USD
-      case 'EUR': // Euro
-        return amount / 35; // Conversion rate for EUR
-      case 'JPY': // Japanese Yen
-        return amount / 0.21; // Conversion rate for JPY
-      default:
-        return 0;
+  double convertCurrency(String bank, String currency, double amount) {
+    final rates = {
+      'Krungthai Bank (KTB)': {'USD': 34.83, 'EUR': 36, 'JPY': 0.2212},
+      'Siam Commercial Bank (SCB)': {'USD': 34.2, 'EUR': 35.09, 'JPY': 0.2134},
+      'TMBThanachart Bank (TTB)': {'USD': 34.87, 'EUR': 36.45, 'JPY': 0.2289},
+    };
+
+    if (rates.containsKey(bank) && rates[bank]!.containsKey(currency)) {
+      double rate = rates[bank]![currency]!.toDouble();
+      return amount / rate;
     }
+    return 0;
   }
 
   @override
   Widget build(BuildContext context) {
-    double bahtAmount = double.tryParse(amount) ?? 0; // Convert amount to double
-    double convertedAmount = convertCurrency(currency, bahtAmount);
+    final currencySigns = {
+      'USD': '\$', 
+      'EUR': '€', 
+      'JPY': '¥', 
+    };
+
+    double bahtAmount = double.tryParse(amount) ?? 0;
+    double convertedAmount = convertCurrency(bank, currency, bahtAmount);
+    String currencySign = currencySigns[currency] ?? '';
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Result'),
+        title: const Text('Conversion Result'),
+        backgroundColor: Colors.blue,
       ),
       body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Conversion Result',
-                style: TextStyle(
-                  fontSize: 24.0,
-                  fontWeight: FontWeight.bold,
-                ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Bank: $bank',
+              style: const TextStyle(
+                fontSize: 18.0,
+                color: Colors.black54,
               ),
-              const SizedBox(height: 16.0),
-              Text(
-                'Amount in Thai Baht: $amount',
-                style: TextStyle(fontSize: 18.0),
+            ),
+            const SizedBox(height: 16.0),
+            Text(
+              'Your Result:',
+              style: const TextStyle(
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
               ),
-              const SizedBox(height: 8.0),
-              Text(
-                'Selected Bank: $bank',
-                style: TextStyle(fontSize: 18.0),
+            ),
+            const SizedBox(height: 16.0),
+            Text(
+              '$currencySign${convertedAmount.toStringAsFixed(2)}',
+              style: const TextStyle(
+                fontSize: 32.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.blue,
               ),
-              const SizedBox(height: 8.0),
-              Text(
-                'Selected Currency: $currency',
-                style: TextStyle(fontSize: 18.0),
-              ),
-              const SizedBox(height: 16.0),
-              Text(
-                'Converted Amount: ${convertedAmount.toStringAsFixed(2)} $currency',
-                style: TextStyle(
-                  fontSize: 18.0,
-                  color: Colors.blueAccent,
-                ),
-              ),
-              const SizedBox(height: 24.0),
-              Center(
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('Back'),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

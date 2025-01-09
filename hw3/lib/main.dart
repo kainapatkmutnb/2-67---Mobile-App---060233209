@@ -5,6 +5,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -15,6 +17,8 @@ class MyApp extends StatelessWidget {
 }
 
 class ATMApp extends StatefulWidget {
+  const ATMApp({super.key});
+
   @override
   _ATMAppState createState() => _ATMAppState();
 }
@@ -56,16 +60,16 @@ class _ATMAppState extends State<ATMApp> {
   Widget amountButton(int amount, Function(int) onPressed) {
     return ElevatedButton(
       onPressed: () => onPressed(amount),
-      child: Text(
-        amount.toString(),
-        style: TextStyle(color: Colors.white),
-      ),
       style: ElevatedButton.styleFrom(
-        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-        backgroundColor: Color.fromARGB(255, 87, 161, 222),
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+        backgroundColor: const Color.fromARGB(255, 87, 161, 222),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
         ),
+      ),
+      child: Text(
+        amount.toString(),
+        style: TextStyle(color: Colors.white),
       ),
     );
   }
@@ -74,11 +78,11 @@ class _ATMAppState extends State<ATMApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'ATM-1999',
           style: TextStyle(color: Color.fromARGB(200, 0, 0, 0)),
         ),
-        backgroundColor: Color.fromARGB(255, 179, 157, 219),
+        backgroundColor: const Color.fromARGB(255, 179, 157, 219),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -86,79 +90,79 @@ class _ATMAppState extends State<ATMApp> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               'Your Balance is',
               style: TextStyle(fontSize: 28),
             ),
             Text(
               '$balance',
-              style: TextStyle(fontSize: 28),
+              style: const TextStyle(fontSize: 28),
             ),
-            SizedBox(height: 32),
+            const SizedBox(height: 32),
             Text(
-              '$state',
-              style: TextStyle(fontSize: 28),
+              state,
+              style: const TextStyle(fontSize: 28),
             ),
             Text(
               '$money',
-              style: TextStyle(fontSize: 28),
+              style: const TextStyle(fontSize: 28),
             ),
-            SizedBox(height: 32),
+            const SizedBox(height: 32),
             Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     amountButton(1000, selectMoney),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     amountButton(2000, selectMoney),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     amountButton(3000, selectMoney),
                   ],
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     amountButton(4000, selectMoney),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     amountButton(5000, selectMoney),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     amountButton(6000, selectMoney),
                   ],
                 ),
               ],
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton.icon(
                   onPressed: depositMoney,
-                  icon: Icon(Icons.add, color: Colors.white),
-                  label: Text(
+                  icon: const Icon(Icons.add, color: Colors.white),
+                  label: const Text(
                     'deposit',
                     style: TextStyle(color: Colors.white),
                   ),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromARGB(255, 0, 97, 4),
-                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+                    backgroundColor: const Color.fromARGB(255, 0, 97, 4),
+                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),
                   ),
                 ),
-                SizedBox(width: 16),
+                const SizedBox(width: 16),
                 ElevatedButton.icon(
                   onPressed: withdrawMoney,
-                  icon: Icon(Icons.delete_outline, color: Colors.white),
-                  label: Text(
+                  icon: const Icon(Icons.delete_outline, color: Colors.white),
+                  label: const Text(
                     'withdraw',
                     style: TextStyle(color: Colors.white),
                   ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromARGB(255, 255, 17, 0),
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),

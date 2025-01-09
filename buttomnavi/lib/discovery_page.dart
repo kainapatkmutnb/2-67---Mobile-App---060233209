@@ -3,7 +3,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter/material.dart';
 
 class Discovery extends StatefulWidget {
-  const Discovery({Key? key}) : super(key: key);
+  const Discovery({super.key});
 
   @override
   State<Discovery> createState() => _DiscoveryState();
