@@ -1,6 +1,7 @@
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter/material.dart';
+import 'create_form/cl_create.dart';
 
 class Library extends StatefulWidget {
   const Library({Key? key}) : super(key: key);
@@ -16,6 +17,22 @@ class _LibraryState extends State<Library> {
       appBar: AppBar(
         centerTitle: true,
         title: Text('Library page'),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.search),
+          ),
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ClCreate()),
+              );
+            },
+            icon: const Icon(Icons.add_circle_outline),
+          ),
+        ],
       ),
     );
   }
