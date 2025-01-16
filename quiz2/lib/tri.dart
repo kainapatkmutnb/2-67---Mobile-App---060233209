@@ -15,9 +15,14 @@ class Tri extends StatelessWidget {
         title: Text("Triangle Area"),
       ),
       body: Center(
-        child: Text(
-          'Area: $area',
-          style: TextStyle(fontSize: 20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Height: $height'),
+            Text('Width: $base'),
+            SizedBox(height: 20),
+            Text('Area: $area'),
+          ],
         ),
       ),
     );

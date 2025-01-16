@@ -54,23 +54,36 @@ class _HomePageState extends State<HomePage> {
                 });
               },
             ),
-            if (selectedShape == 'Rectangle' || selectedShape == 'Triangle') ...[
+            if (selectedShape == 'Rectangle') ...[
               TextField(
                 controller: widthController,
-                decoration: InputDecoration(labelText: 'Width/Base'),
+                decoration: InputDecoration(labelText: 'Width (w)'),
                 keyboardType: TextInputType.number,
               ),
               SizedBox(height: 16),
               TextField(
                 controller: heightController,
-                decoration: InputDecoration(labelText: 'Height'),
+                decoration: InputDecoration(labelText: 'Height (h)'),
+                keyboardType: TextInputType.number,
+              ),
+            ],
+            if (selectedShape == 'Triangle') ...[
+              TextField(
+                controller: widthController,
+                decoration: InputDecoration(labelText: 'Width (w)'),
+                keyboardType: TextInputType.number,
+              ),
+              SizedBox(height: 16),
+              TextField(
+                controller: heightController,
+                decoration: InputDecoration(labelText: 'Base (b)'),
                 keyboardType: TextInputType.number,
               ),
             ],
             if (selectedShape == 'Circle') ...[
               TextField(
                 controller: radiusController,
-                decoration: InputDecoration(labelText: 'Radius'),
+                decoration: InputDecoration(labelText: 'Radius (r)'),
                 keyboardType: TextInputType.number,
               ),
             ],
