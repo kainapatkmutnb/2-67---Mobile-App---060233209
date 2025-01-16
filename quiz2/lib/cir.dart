@@ -34,12 +34,12 @@ class _CirState extends State<Cir> {
           children: [
             Text(
               'Radius: ${widget.radius}',
-              style: TextStyle(fontSize: 18),
+              style: TextStyle(fontSize: 20),
             ),
             SizedBox(height: 10),
             Text(
               'Area: $area',
-              style: TextStyle(fontSize: 18),
+              style: TextStyle(fontSize: 20),
             ),
           ],
         ),

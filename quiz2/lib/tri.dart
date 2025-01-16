@@ -4,7 +4,7 @@ class Tri extends StatelessWidget {
   final double base;
   final double height;
 
-  Tri({required this.base, required this.height});
+  const Tri({super.key, required this.base, required this.height});
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +18,19 @@ class Tri extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Height: $base'),
-            Text('Base: $height'),
+            Text(
+              'Height: $base',
+              style: TextStyle(fontSize: 20),
+            ),
+            Text(
+              'Base: $height',
+              style: TextStyle(fontSize: 20),
+            ),
             SizedBox(height: 20),
-            Text('Area: $area'),
+            Text(
+              'Area: $area',
+              style: TextStyle(fontSize: 20),
+            ),
           ],
         ),
       ),
