@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class CircleAreaPage extends StatefulWidget {
+class Cir extends StatefulWidget {
   final double radius;
 
-  CircleAreaPage({required this.radius});
+  Cir({required this.radius});
 
   @override
-  _CircleAreaPageState createState() => _CircleAreaPageState();
+  _CirState createState() => _CirState();
 }
 
-class _CircleAreaPageState extends State<CircleAreaPage> {
+class _CirState extends State<Cir> {
   String result = "";
 
   @override

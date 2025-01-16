@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class TriangleAreaPage extends StatefulWidget {
+class Tri extends StatefulWidget {
   @override
-  _TriangleAreaPageState createState() => _TriangleAreaPageState();
+  _TriState createState() => _TriState();
 }
 
-class _TriangleAreaPageState extends State<TriangleAreaPage> {
+class _TriState extends State<Tri> {
   final TextEditingController baseController = TextEditingController();
   final TextEditingController heightController = TextEditingController();
   String result = "";

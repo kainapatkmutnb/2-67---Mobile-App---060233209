@@ -10,6 +10,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String selectedShape = 'Rectangle';
+  final TextEditingController widthController = TextEditingController();
+  final TextEditingController heightController = TextEditingController();
+  final TextEditingController radiusController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -17,67 +20,97 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text('Geometric Area Calculator'),
       ),
-      body: Column(
-        children: [
-          RadioListTile<String>(
-            title: Text('Rectangle'),
-            value: 'Rectangle',
-            groupValue: selectedShape,
-            onChanged: (value) {
-              setState(() {
-                selectedShape = value!;
-              });
-            },
-          ),
-          RadioListTile<String>(
-            title: Text('Triangle'),
-            value: 'Triangle',
-            groupValue: selectedShape,
-            onChanged: (value) {
-              setState(() {
-                selectedShape = value!;
-              });
-            },
-          ),
-          RadioListTile<String>(
-            title: Text('Circle'),
-            value: 'Circle',
-            groupValue: selectedShape,
-            onChanged: (value) {
-              setState(() {
-                selectedShape = value!;
-              });
-            },
-          ),
-          ElevatedButton(
-            onPressed: () {
-              // นำทางไปยังหน้าคำนวณตามรูปทรงที่เลือก
-              if (selectedShape == 'Rectangle') {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => RectangleAreaPage()),
-                );
-              } else if (selectedShape == 'Triangle') {
-                // รับค่าพื้นฐานและความสูงจาก TextField หรือ Widget อื่นๆ
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => TriangleAreaPage()),
-                );
-              } else if (selectedShape == 'Circle') {
-                // รับค่ารัศมีจาก TextField หรือ Widget อื่นๆ
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => CircleAreaPage(),
-                  ),
-                );
-              }
-            },
-            child: Text('Calculate Area'),
-          ),
-        ],
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            RadioListTile<String>(
+              title: Text('Rectangle'),
+              value: 'Rectangle',
+              groupValue: selectedShape,
+              onChanged: (value) {
+                setState(() {
+                  selectedShape = value!;
+                });
+              },
+            ),
+            RadioListTile<String>(
+              title: Text('Triangle'),
+              value: 'Triangle',
+              groupValue: selectedShape,
+              onChanged: (value) {
+                setState(() {
+                  selectedShape = value!;
+                });
+              },
+            ),
+            RadioListTile<String>(
+              title: Text('Circle'),
+              value: 'Circle',
+              groupValue: selectedShape,
+              onChanged: (value) {
+                setState(() {
+                  selectedShape = value!;
+                });
+              },
+            ),
+            if (selectedShape == 'Rectangle' || selectedShape == 'Triangle') ...[
+              TextField(
+                controller: widthController,
+                decoration: InputDecoration(labelText: 'Width/Base'),
+                keyboardType: TextInputType.number,
+              ),
+              SizedBox(height: 16),
+              TextField(
+                controller: heightController,
+                decoration: InputDecoration(labelText: 'Height'),
+                keyboardType: TextInputType.number,
+              ),
+            ],
+            if (selectedShape == 'Circle') ...[
+              TextField(
+                controller: radiusController,
+                decoration: InputDecoration(labelText: 'Radius'),
+                keyboardType: TextInputType.number,
+              ),
+            ],
+            SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () {
+                if (selectedShape == 'Rectangle') {
+                  double width = double.tryParse(widthController.text) ?? 0;
+                  double height = double.tryParse(heightController.text) ?? 0;
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Rec(width: width, height: height),
+                    ),
+                  );
+                } else if (selectedShape == 'Triangle') {
+                  double base = double.tryParse(widthController.text) ?? 0;
+                  double height = double.tryParse(heightController.text) ?? 0;
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Tri(base: base, height: height),
+                    ),
+                  );
+                } else if (selectedShape == 'Circle') {
+                  double radius = double.tryParse(radiusController.text) ?? 0;
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Cir(radius: radius),
+                    ),
+                  );
+                }
+              },
+              child: Text('Calculate Area'),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
+
