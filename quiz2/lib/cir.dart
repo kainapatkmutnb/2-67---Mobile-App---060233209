@@ -19,7 +19,7 @@ class _CirState extends State<Cir> {
   }
 
   void calculateArea() {
-    area = 3.14159 * widget.radius * widget.radius;
+    area = 3.14159265358979323846264338327950288420 * widget.radius * widget.radius;
   }
 
   @override
