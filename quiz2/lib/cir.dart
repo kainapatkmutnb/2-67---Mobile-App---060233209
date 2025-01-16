@@ -10,7 +10,7 @@ class Cir extends StatefulWidget {
 }
 
 class _CirState extends State<Cir> {
-  String result = "";
+  late double area;
 
   @override
   void initState() {
@@ -19,10 +19,7 @@ class _CirState extends State<Cir> {
   }
 
   void calculateArea() {
-    double area = 3.14159 * widget.radius * widget.radius;
-    setState(() {
-      result = "Area: $area";
-    });
+    area = 3.14159 * widget.radius * widget.radius;
   }
 
   @override
@@ -32,9 +29,19 @@ class _CirState extends State<Cir> {
         title: Text("Circle Area"),
       ),
       body: Center(
-        child: Text(
-          result,
-          style: TextStyle(fontSize: 20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Radius: ${widget.radius}',
+              style: TextStyle(fontSize: 18),
+            ),
+            SizedBox(height: 10),
+            Text(
+              'Area: $area',
+              style: TextStyle(fontSize: 18),
+            ),
+          ],
         ),
       ),
     );
