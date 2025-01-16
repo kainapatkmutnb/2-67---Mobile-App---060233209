@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Home(), // Home screen will be shown when the app starts
+      home: HomePage(), // Home screen will be shown when the app starts
     );
   }
 }
