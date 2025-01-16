@@ -17,7 +17,7 @@ class Tri extends StatelessWidget {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [            
+          children: [
             Text('Height: $base'),
             Text('Base: $height'),
             SizedBox(height: 20),

@@ -16,7 +16,7 @@ class Rec extends StatelessWidget {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pop(context); // Go back to home screen
+            Navigator.pop(context);
           },
         ),
       ),
