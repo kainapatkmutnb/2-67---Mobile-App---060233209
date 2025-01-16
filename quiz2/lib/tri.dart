@@ -1,26 +1,20 @@
 import 'package:flutter/material.dart';
 
 class TriangleAreaPage extends StatefulWidget {
-  final double base;
-  final double height;
-
-  TriangleAreaPage({required this.base, required this.height});
-
   @override
   _TriangleAreaPageState createState() => _TriangleAreaPageState();
 }
 
 class _TriangleAreaPageState extends State<TriangleAreaPage> {
+  final TextEditingController baseController = TextEditingController();
+  final TextEditingController heightController = TextEditingController();
   String result = "";
 
-  @override
-  void initState() {
-    super.initState();
-    calculateArea();
-  }
-
   void calculateArea() {
-    double area = 0.5 * widget.base * widget.height;
+    double base = double.tryParse(baseController.text) ?? 0;
+    double height = double.tryParse(heightController.text) ?? 0;
+    double area = 0.5 * base * height;
+
     setState(() {
       result = "Area: $area";
     });
@@ -32,10 +26,32 @@ class _TriangleAreaPageState extends State<TriangleAreaPage> {
       appBar: AppBar(
         title: Text("Triangle Area"),
       ),
-      body: Center(
-        child: Text(
-          result,
-          style: TextStyle(fontSize: 20),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            TextField(
+              controller: baseController,
+              decoration: InputDecoration(labelText: "Base"),
+              keyboardType: TextInputType.number,
+            ),
+            SizedBox(height: 16),
+            TextField(
+              controller: heightController,
+              decoration: InputDecoration(labelText: "Height"),
+              keyboardType: TextInputType.number,
+            ),
+            SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: calculateArea,
+              child: Text("Calculate"),
+            ),
+            SizedBox(height: 16),
+            Text(
+              result,
+              style: TextStyle(fontSize: 20),
+            ),
+          ],
         ),
       ),
     );

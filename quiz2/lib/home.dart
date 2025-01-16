@@ -83,40 +83,7 @@ class _HomeState extends State<Home> {
                       );
                     }
                   },
-                  child: Text('Calculate Rectangle Area'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    if (_formkey.currentState?.validate() ?? false) {
-                      // Navigate to tri.dart and pass base & height
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => TriangleAreaPage(
-                            base: double.parse(baseController.text),
-                            height: double.parse(heightController.text),
-                          ),
-                        ),
-                      );
-                    }
-                  },
-                  child: Text('Calculate Triangle Area'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    if (_formkey.currentState?.validate() ?? false) {
-                      // Navigate to cir.dart and pass radius
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CircleAreaPage(
-                            radius: double.parse(radiusController.text),
-                          ),
-                        ),
-                      );
-                    }
-                  },
-                  child: Text('Calculate Circle Area'),
+                  child: Text('Calculate Area'),
                 ),
               ],
             ],
