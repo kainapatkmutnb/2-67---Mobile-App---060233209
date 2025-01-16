@@ -1,18 +1,25 @@
 import 'package:flutter/material.dart';
 
 class CircleAreaPage extends StatefulWidget {
+  final double radius;
+
+  CircleAreaPage({required this.radius});
+
   @override
   _CircleAreaPageState createState() => _CircleAreaPageState();
 }
 
 class _CircleAreaPageState extends State<CircleAreaPage> {
-  final TextEditingController radiusController = TextEditingController();
   String result = "";
 
-  void calculateArea() {
-    double radius = double.tryParse(radiusController.text) ?? 0;
-    double area = 3.14159 * radius * radius;
+  @override
+  void initState() {
+    super.initState();
+    calculateArea();
+  }
 
+  void calculateArea() {
+    double area = 3.14159 * widget.radius * widget.radius;
     setState(() {
       result = "Area: $area";
     });
@@ -24,26 +31,10 @@ class _CircleAreaPageState extends State<CircleAreaPage> {
       appBar: AppBar(
         title: Text("Circle Area"),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: radiusController,
-              decoration: InputDecoration(labelText: "Radius"),
-              keyboardType: TextInputType.number,
-            ),
-            SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: calculateArea,
-              child: Text("Calculate"),
-            ),
-            SizedBox(height: 16),
-            Text(
-              result,
-              style: TextStyle(fontSize: 20),
-            ),
-          ],
+      body: Center(
+        child: Text(
+          result,
+          style: TextStyle(fontSize: 20),
         ),
       ),
     );
