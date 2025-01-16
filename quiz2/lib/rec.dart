@@ -24,8 +24,8 @@ class Rec extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Height: $height'),
-            Text('Width: $width'),
+            Text('Height: $width'),
+            Text('Width: $height'),
             SizedBox(height: 20),
             Text('Area: $area'),
           ],

@@ -57,13 +57,13 @@ class _HomePageState extends State<HomePage> {
             if (selectedShape == 'Rectangle') ...[
               TextField(
                 controller: widthController,
-                decoration: InputDecoration(labelText: 'Width (w)'),
+                decoration: InputDecoration(labelText: 'Height (h)'),
                 keyboardType: TextInputType.number,
               ),
               SizedBox(height: 16),
               TextField(
                 controller: heightController,
-                decoration: InputDecoration(labelText: 'Height (h)'),
+                decoration: InputDecoration(labelText: 'Width (w)'),
                 keyboardType: TextInputType.number,
               ),
             ],
