@@ -36,9 +36,14 @@ Future _onCreate(Database db, int version) async {
 
   // Insert a new user into the database
   Future<int> insertUser(User user) async {
-    Database db = await instance.db;
-    return await db.insert('tbUsers', user.toMap());
-  }
+  Database db = await instance.db;
+  return await db.insert('tbUsers', {
+    'username': user.username,
+    'email': user.email,
+    'password': user.password, // บันทึก password
+    'createdAt': user.createdAt, // เวลาอัตโนมัติจะตั้งโดยฐานข้อมูล
+  });
+}
 
   // Query all users from the database
   Future<List<Map<String, dynamic>>> queryAllUsers() async {
