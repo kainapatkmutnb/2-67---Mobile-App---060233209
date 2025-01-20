@@ -22,28 +22,21 @@ class DatabaseHelper {
   }
 
   // Create the table
-Future _onCreate(Database db, int version) async {
-  await db.execute('''
-    CREATE TABLE tbUsers (
-      id INTEGER PRIMARY KEY,
-      username TEXT,
-      email TEXT,
-      password TEXT,
-      createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    )
-  ''');
-}
+  Future _onCreate(Database db, int version) async {
+    await db.execute('''
+      CREATE TABLE tbUsers (
+        id INTEGER PRIMARY KEY,
+        username TEXT,
+        email TEXT
+      )
+    ''');
+  }
 
   // Insert a new user into the database
   Future<int> insertUser(User user) async {
-  Database db = await instance.db;
-  return await db.insert('tbUsers', {
-    'username': user.username,
-    'email': user.email,
-    'password': user.password, // บันทึก password
-    'createdAt': user.createdAt, // เวลาอัตโนมัติจะตั้งโดยฐานข้อมูล
-  });
-}
+    Database db = await instance.db;
+    return await db.insert('tbUsers', user.toMap());
+  }
 
   // Query all users from the database
   Future<List<Map<String, dynamic>>> queryAllUsers() async {

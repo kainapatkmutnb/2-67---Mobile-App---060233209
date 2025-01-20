@@ -2,24 +2,14 @@ class User {
   final int? id;
   final String username;
   final String email;
-  final String? password;
-  final String? createdAt;
 
-  User({
-    this.id,
-    required this.username,
-    required this.email,
-    this.password,
-    this.createdAt,
-  });
+  User({this.id, required this.username, required this.email});
 
   Map<String, dynamic> toMap() {
     return {
       'id': id,
       'username': username,
       'email': email,
-      'password': password,
-      'createdAt': createdAt,
     };
   }
 
@@ -28,8 +18,6 @@ class User {
       id: map['id'],
       username: map['username'],
       email: map['email'],
-      password: map['password'],
-      createdAt: map['createdAt'],
     );
   }
 }
