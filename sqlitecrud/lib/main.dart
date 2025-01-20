@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'database_helper.dart'; // Import the DatabaseHelper class
-import 'user.dart'; // Import the User class
+import 'database_helper.dart';
+import 'user.dart';
 
 void main() async {
-  // Initialize the database and insert users
   WidgetsFlutterBinding.ensureInitialized();
   await DatabaseHelper.instance.initDb();
   await DatabaseHelper.instance.initializeUsers();
-
   runApp(MyApp());
 }
 
@@ -43,55 +41,53 @@ class _UserListState extends State<UserList> {
     });
   }
 
-  // Function to handle delete user action
   Future<void> _deleteUser(int userId) async {
     await DatabaseHelper.instance.deleteUser(userId);
-    _fetchUsers(); // Refresh the user list
+    _fetchUsers();
   }
 
-  // Function to handle edit user action
   void _editUser(User user) {
-    TextEditingController usernameController =
-        TextEditingController(text: user.username);
-    TextEditingController emailController =
-        TextEditingController(text: user.email);
+    TextEditingController usernameController = TextEditingController(text: user.username);
+    TextEditingController emailController = TextEditingController(text: user.email);
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Edit User'),
-          content: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: usernameController,
-                decoration: InputDecoration(labelText: 'Username'),
-              ),
-              TextField(
-                controller: emailController,
-                decoration: InputDecoration(labelText: 'Email'),
-              ),
-            ],
+          content: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  controller: usernameController,
+                  decoration: InputDecoration(labelText: 'Username'),
+                ),
+                TextField(
+                  controller: emailController,
+                  decoration: InputDecoration(labelText: 'Email'),
+                ),
+              ],
+            ),
           ),
           actions: [
             TextButton(
               onPressed: () {
                 final updatedUser = User(
-                  id: user.id, // Keep the same id to update the correct record
+                  id: user.id,
                   username: usernameController.text,
                   email: emailController.text,
                 );
                 DatabaseHelper.instance.updateUser(updatedUser).then((value) {
-                  _fetchUsers(); // Refresh the user list
-                  Navigator.pop(context); // Close the dialog
+                  _fetchUsers();
+                  Navigator.pop(context);
                 });
               },
               child: Text('Save'),
             ),
             TextButton(
-              onPressed: () =>
-                  Navigator.pop(context), // Close the dialog without saving
+              onPressed: () => Navigator.pop(context),
               child: Text('Cancel'),
             ),
           ],
@@ -103,24 +99,27 @@ class _UserListState extends State<UserList> {
   void _addUser() {
     TextEditingController usernameController = TextEditingController();
     TextEditingController emailController = TextEditingController();
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Add New User'),
-          content: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: usernameController,
-                decoration: InputDecoration(labelText: 'Username'),
-              ),
-              TextField(
-                controller: emailController,
-                decoration: InputDecoration(labelText: 'Email'),
-              ),
-            ],
+          content: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  controller: usernameController,
+                  decoration: InputDecoration(labelText: 'Username'),
+                ),
+                TextField(
+                  controller: emailController,
+                  decoration: InputDecoration(labelText: 'Email'),
+                ),
+              ],
+            ),
           ),
           actions: [
             TextButton(
@@ -130,15 +129,14 @@ class _UserListState extends State<UserList> {
                   email: emailController.text,
                 );
                 DatabaseHelper.instance.insertUser(newUser).then((value) {
-                  _fetchUsers(); // Refresh the user list
-                  Navigator.pop(context); // Close the dialog
+                  _fetchUsers();
+                  Navigator.pop(context);
                 });
               },
               child: Text('Add'),
             ),
             TextButton(
-              onPressed: () =>
-                  Navigator.pop(context), // Close the dialog without adding
+              onPressed: () => Navigator.pop(context),
               child: Text('Cancel'),
             ),
           ],
@@ -148,21 +146,28 @@ class _UserListState extends State<UserList> {
   }
 
   Future<void> _deleteAllUsers() async {
-    await DatabaseHelper.instance.deleteAllUsers(); // Delete all users
-    _fetchUsers(); // Refresh the user list
+    await DatabaseHelper.instance.deleteAllUsers();
+    _fetchUsers();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('GFG User List'),
-        backgroundColor: const Color.fromARGB(255, 6, 207, 252),
+        title: Text(
+          'GFG User List',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: const Color.fromARGB(214, 5, 147, 255),
         actions: [
           IconButton(
-            icon: Icon(Icons.delete_forever),
-            onPressed: _deleteAllUsers, // Delete all users when pressed
-            color: Colors.red,
+            icon: Icon(Icons.delete_forever_outlined),
+            onPressed: _deleteAllUsers,
+            color: Colors.redAccent,
           ),
         ],
       ),
@@ -182,13 +187,13 @@ class _UserListState extends State<UserList> {
               children: [
                 IconButton(
                   icon: Icon(Icons.edit),
-                  onPressed: () => _editUser(user), // Edit action
-                  color: Colors.blue,
+                  onPressed: () => _editUser(user),
+                  color: Colors.lightBlueAccent,
                 ),
                 IconButton(
                   icon: Icon(Icons.delete),
-                  onPressed: () => _deleteUser(user.id!), // Delete action
-                  color: Colors.red,
+                  onPressed: () => _deleteUser(user.id!),
+                  color: Colors.redAccent,
                 ),
               ],
             ),
@@ -197,8 +202,11 @@ class _UserListState extends State<UserList> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addUser,
-        child: Icon(Icons.add),
-        backgroundColor: const Color.fromARGB(255, 7, 174, 221),
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
+        backgroundColor: const Color.fromARGB(214, 5, 147, 255),
       ),
     );
   }
