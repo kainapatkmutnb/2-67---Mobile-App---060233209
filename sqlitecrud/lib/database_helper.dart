@@ -22,15 +22,17 @@ class DatabaseHelper {
   }
 
   // Create the table
-  Future _onCreate(Database db, int version) async {
-    await db.execute('''
-      CREATE TABLE tbUsers (
-        id INTEGER PRIMARY KEY,
-        username TEXT,
-        email TEXT
-      )
-    ''');
-  }
+Future _onCreate(Database db, int version) async {
+  await db.execute('''
+    CREATE TABLE tbUsers (
+      id INTEGER PRIMARY KEY,
+      username TEXT,
+      email TEXT,
+      password TEXT,
+      createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+  ''');
+}
 
   // Insert a new user into the database
   Future<int> insertUser(User user) async {
