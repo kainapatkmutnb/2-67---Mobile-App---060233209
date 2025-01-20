@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'database_helper.dart'; // Import the DatabaseHelper class
-import 'user.dart'; // Import the User class
+import 'database_helper.dart';
+import 'user.dart';
 
 void main() async {
-  // Initialize the database and insert users
   WidgetsFlutterBinding.ensureInitialized();
   await DatabaseHelper.instance.initDb();
   await DatabaseHelper.instance.initializeUsers();
-
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -19,7 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'User Management',
-      home: UserList(),
+      home: const UserList(),
     );
   }
 }
@@ -47,34 +45,31 @@ class _UserListState extends State<UserList> {
     });
   }
 
-  // Function to handle delete user action
   Future<void> _deleteUser(int userId) async {
     await DatabaseHelper.instance.deleteUser(userId);
-    _fetchUsers(); // Refresh the user list
+    _fetchUsers();
   }
 
-  // Function to handle edit user action
   void _editUser(User user) {
-    TextEditingController usernameController =
-        TextEditingController(text: user.username);
-    TextEditingController emailController =
-        TextEditingController(text: user.email);
+    final usernameController = TextEditingController(text: user.username);
+    final emailController = TextEditingController(text: user.email);
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Edit User'),
+          title: const Text('Edit User'),
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 controller: usernameController,
-                decoration: InputDecoration(labelText: 'Username'),
+                decoration: const InputDecoration(labelText: 'Username'),
               ),
               TextField(
                 controller: emailController,
-                decoration: InputDecoration(labelText: 'Email'),
+                decoration: const InputDecoration(labelText: 'Email'),
               ),
             ],
           ),
@@ -82,21 +77,22 @@ class _UserListState extends State<UserList> {
             TextButton(
               onPressed: () {
                 final updatedUser = User(
-                  id: user.id, // Keep the same id to update the correct record
+                  id: user.id,
                   username: usernameController.text,
                   email: emailController.text,
+                  password: user.password,
+                  createdAt: user.createdAt,
                 );
-                DatabaseHelper.instance.updateUser(updatedUser).then((value) {
-                  _fetchUsers(); // Refresh the user list
-                  Navigator.pop(context); // Close the dialog
+                DatabaseHelper.instance.updateUser(updatedUser).then((_) {
+                  _fetchUsers();
+                  if (mounted) Navigator.pop(context);
                 });
               },
-              child: Text('Save'),
+              child: const Text('Save'),
             ),
             TextButton(
-              onPressed: () =>
-                  Navigator.pop(context), // Close the dialog without saving
-              child: Text('Cancel'),
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Cancel'),
             ),
           ],
         );
@@ -105,45 +101,48 @@ class _UserListState extends State<UserList> {
   }
 
   void _addUser() {
-    TextEditingController usernameController = TextEditingController();
-    TextEditingController emailController = TextEditingController();
+    final usernameController = TextEditingController();
+    final emailController = TextEditingController();
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Add New User'),
+          title: const Text('Add New User'),
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 controller: usernameController,
-                decoration: InputDecoration(labelText: 'Username'),
+                decoration: const InputDecoration(labelText: 'Username'),
               ),
               TextField(
                 controller: emailController,
-                decoration: InputDecoration(labelText: 'Email'),
+                decoration: const InputDecoration(labelText: 'Email'),
               ),
             ],
           ),
           actions: [
             TextButton(
               onPressed: () {
+                final currentContext = context;
                 final newUser = User(
                   username: usernameController.text,
                   email: emailController.text,
+                  password: 'default_password',
+                  createdAt: DateTime.now().toIso8601String(),
                 );
-                DatabaseHelper.instance.insertUser(newUser).then((value) {
-                  _fetchUsers(); // Refresh the user list
-                  Navigator.pop(context); // Close the dialog
+                DatabaseHelper.instance.insertUser(newUser).then((_) {
+                  _fetchUsers();
+                  if (mounted) Navigator.pop(currentContext);
                 });
               },
-              child: Text('Add'),
+              child: const Text('Add'),
             ),
             TextButton(
-              onPressed: () =>
-                  Navigator.pop(context), // Close the dialog without adding
-              child: Text('Cancel'),
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Cancel'),
             ),
           ],
         );
@@ -152,20 +151,20 @@ class _UserListState extends State<UserList> {
   }
 
   Future<void> _deleteAllUsers() async {
-    await DatabaseHelper.instance.deleteAllUsers(); // Delete all users
-    _fetchUsers(); // Refresh the user list
+    await DatabaseHelper.instance.deleteAllUsers();
+    _fetchUsers();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('GFG User List'),
+        title: const Text('GFG User List'),
         backgroundColor: const Color.fromARGB(255, 6, 207, 252),
         actions: [
           IconButton(
-            icon: Icon(Icons.delete_forever),
-            onPressed: _deleteAllUsers, // Delete all users when pressed
+            icon: const Icon(Icons.delete_forever),
+            onPressed: _deleteAllUsers,
             color: Colors.red,
           ),
         ],
@@ -175,7 +174,7 @@ class _UserListState extends State<UserList> {
         itemBuilder: (context, index) {
           final user = _users[index];
           return ListTile(
-            leading: Icon(
+            leading: const Icon(
               Icons.account_circle,
               color: Colors.cyan,
             ),
@@ -185,13 +184,13 @@ class _UserListState extends State<UserList> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 IconButton(
-                  icon: Icon(Icons.edit),
-                  onPressed: () => _editUser(user), // Edit action
+                  icon: const Icon(Icons.edit),
+                  onPressed: () => _editUser(user),
                   color: Colors.blue,
                 ),
                 IconButton(
-                  icon: Icon(Icons.delete),
-                  onPressed: () => _deleteUser(user.id!), // Delete action
+                  icon: const Icon(Icons.delete),
+                  onPressed: () => _deleteUser(user.id!),
                   color: Colors.red,
                 ),
               ],
@@ -202,7 +201,7 @@ class _UserListState extends State<UserList> {
       floatingActionButton: FloatingActionButton(
         onPressed: _addUser,
         backgroundColor: const Color.fromARGB(255, 7, 174, 221),
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }
