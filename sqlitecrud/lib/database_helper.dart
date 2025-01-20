@@ -8,20 +8,21 @@ class DatabaseHelper {
 
   DatabaseHelper._instance();
 
-  // Get the database instance
+  //------------------------
+  // Database Initialization
+  //------------------------
+
   Future<Database> get db async {
     _database ??= await initDb();
     return _database!;
   }
 
-  // Initialize the database
   Future<Database> initDb() async {
     String databasesPath = await getDatabasesPath();
     String path = join(databasesPath, 'appDB.db');
     return await openDatabase(path, version: 1, onCreate: _onCreate);
   }
 
-  // Create the table
   Future _onCreate(Database db, int version) async {
     await db.execute('''
       CREATE TABLE tbUsers (
@@ -32,37 +33,48 @@ class DatabaseHelper {
     ''');
   }
 
-  // Insert a new user into the database
+  //------------------------
+  // CRUD Operations
+  //------------------------
+
   Future<int> insertUser(User user) async {
     Database db = await instance.db;
     return await db.insert('tbUsers', user.toMap());
   }
 
-  // Query all users from the database
   Future<List<Map<String, dynamic>>> queryAllUsers() async {
     Database db = await instance.db;
     return await db.query('tbUsers');
   }
 
-  // Update user information in the database
   Future<int> updateUser(User user) async {
     Database db = await instance.db;
-    return await db.update('tbUsers', user.toMap(), where: 'id = ?', whereArgs: [user.id]);
+    return await db.update(
+      'tbUsers', 
+      user.toMap(), 
+      where: 'id = ?', 
+      whereArgs: [user.id],
+    );
   }
 
-  // Delete user from the database
   Future<int> deleteUser(int id) async {
     Database db = await instance.db;
-    return await db.delete('tbUsers', where: 'id = ?', whereArgs: [id]);
+    return await db.delete(
+      'tbUsers', 
+      where: 'id = ?', 
+      whereArgs: [id],
+    );
   }
 
-  // Function to delete all users
+  //------------------------
+  // Utility Methods
+  //------------------------
+
   Future<void> deleteAllUsers() async {
     Database db = await instance.db;
-    await db.delete('tbUsers'); // Delete all data from the table
+    await db.delete('tbUsers');
   }
 
-  // Initialize some default users in the database
   Future<void> initializeUsers() async {
     List<User> usersToAdd = [
       User(username: 'John', email: 'john@example.com'),
