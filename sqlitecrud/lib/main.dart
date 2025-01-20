@@ -105,51 +105,59 @@ class _UserListState extends State<UserList> {
   }
 
   void _addUser() {
-    TextEditingController usernameController = TextEditingController();
-    TextEditingController emailController = TextEditingController();
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Add New User'),
-          content: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: usernameController,
-                decoration: InputDecoration(labelText: 'Username'),
-              ),
-              TextField(
-                controller: emailController,
-                decoration: InputDecoration(labelText: 'Email'),
-              ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                final newUser = User(
-                  username: usernameController.text,
-                  email: emailController.text,
-                );
-                DatabaseHelper.instance.insertUser(newUser).then((value) {
-                  _fetchUsers(); // Refresh the user list
-                  Navigator.pop(context); // Close the dialog
-                });
-              },
-              child: Text('Add'),
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController(); // เพิ่มส่วนนี้
+
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('Add New User'),
+        content: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: usernameController,
+              decoration: InputDecoration(labelText: 'Username'),
             ),
-            TextButton(
-              onPressed: () =>
-                  Navigator.pop(context), // Close the dialog without adding
-              child: Text('Cancel'),
+            TextField(
+              controller: emailController,
+              decoration: InputDecoration(labelText: 'Email'),
+            ),
+            TextField(
+              controller: passwordController, // เพิ่มส่วนนี้
+              decoration: InputDecoration(labelText: 'Password'),
+              obscureText: true,
             ),
           ],
-        );
-      },
-    );
-  }
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              final newUser = User(
+                username: usernameController.text,
+                email: emailController.text,
+                password: passwordController.text, // เพิ่มส่วนนี้
+              );
+              DatabaseHelper.instance.insertUser(newUser).then((value) {
+                _fetchUsers(); // Refresh the user list
+                Navigator.pop(context); // Close the dialog
+              });
+            },
+            child: Text('Add'),
+          ),
+          TextButton(
+            onPressed: () =>
+                Navigator.pop(context), // Close the dialog without adding
+            child: Text('Cancel'),
+          ),
+        ],
+      );
+    },
+  );
+}
 
   Future<void> _deleteAllUsers() async {
     await DatabaseHelper.instance.deleteAllUsers(); // Delete all users
