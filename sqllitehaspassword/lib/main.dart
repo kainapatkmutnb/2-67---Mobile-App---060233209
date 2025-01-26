@@ -4,7 +4,7 @@ import 'user.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final dbHelper = DatabaseHelper();
+  final dbHelper = DatabaseHelper.instance;
   await dbHelper.initializeUsers();
   runApp(MyApp());
 }
@@ -15,9 +15,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'User Management',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
       home: UserList(),
     );
   }
@@ -38,14 +35,14 @@ class _UserListState extends State<UserList> {
   }
 
   Future<void> _fetchUsers() async {
-    final userMaps = await DatabaseHelper().queryAllUsers();
+    final userMaps = await DatabaseHelper.instance.queryAllUsers();
     setState(() {
       _users = userMaps.map((userMap) => User.fromMap(userMap)).toList();
     });
   }
 
   Future<void> _deleteUser(int userId) async {
-    await DatabaseHelper().deleteUser(userId);
+    await DatabaseHelper.instance.deleteUser(userId);
     _fetchUsers();
   }
 
@@ -89,10 +86,10 @@ class _UserListState extends State<UserList> {
                   password: passwordController.text,
                   createdAt: user.createdAt,
                 );
-                DatabaseHelper().updateUser(updatedUser).then((value) {
+                DatabaseHelper.instance.updateUser(updatedUser).then((value) {
                   _fetchUsers();
+                  Navigator.pop(context);
                 });
-                Navigator.pop(context);
               },
               child: Text('Save'),
             ),
@@ -145,10 +142,10 @@ class _UserListState extends State<UserList> {
                   password: passwordController.text,
                   createdAt: DateTime.now().toString(),
                 );
-                DatabaseHelper().insertUser(newUser).then((value) {
+                DatabaseHelper.instance.insertUser(newUser).then((value) {
                   _fetchUsers();
+                  Navigator.pop(context);
                 });
-                Navigator.pop(context);
               },
               child: Text('Add'),
             ),
@@ -163,7 +160,7 @@ class _UserListState extends State<UserList> {
   }
 
   Future<void> _deleteAllUsers() async {
-    await DatabaseHelper().deleteAllUsers();
+    await DatabaseHelper.instance.deleteAllUsers();
     _fetchUsers();
   }
 
