@@ -1,11 +1,10 @@
 class User {
-  final int? id; // User's ID (nullable to handle new users)
-  final String username; // User's username
-  final String email; // User's email
-  final String password; // User's password
-  final String createdAt; // Timestamp when the user was created
+  final int? id;
+  final String username;
+  final String email;
+  final String password;
+  final String createdAt;
 
-  // Constructor
   User({
     this.id,
     required this.username,
@@ -14,10 +13,9 @@ class User {
     required this.createdAt,
   });
 
-  // Convert User object to Map (for database insertion)
   Map<String, dynamic> toMap() {
     return {
-      'id': id, // 'id' is nullable for new users (can be null)
+      'id': id,
       'username': username,
       'email': email,
       'password': password,
@@ -25,10 +23,9 @@ class User {
     };
   }
 
-  // Create User object from Map (for database queries)
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
-      id: map['id'], // 'id' can be null if not set yet
+      id: map['id'],
       username: map['username'],
       email: map['email'],
       password: map['password'],
