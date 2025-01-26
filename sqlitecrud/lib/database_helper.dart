@@ -28,7 +28,9 @@ class DatabaseHelper {
       CREATE TABLE tbUsers (
         id INTEGER PRIMARY KEY,
         username TEXT,
-        email TEXT
+        email TEXT,
+        password TEXT,     // Added password column
+        createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP  // Added createdAt column
       )
     ''');
   }
