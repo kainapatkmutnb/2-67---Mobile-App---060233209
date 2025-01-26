@@ -53,7 +53,6 @@ class _UserListState extends State<UserList> {
   void _editUser(User user) {
     TextEditingController usernameController = TextEditingController(text: user.username);
     TextEditingController emailController = TextEditingController(text: user.email);
-    TextEditingController passwordController = TextEditingController(text: user.password);
 
     showDialog(
       context: context,
@@ -73,11 +72,6 @@ class _UserListState extends State<UserList> {
                   controller: emailController,
                   decoration: InputDecoration(labelText: 'Email'),
                 ),
-                TextField(
-                  controller: passwordController,
-                  decoration: InputDecoration(labelText: 'Password'),
-                  obscureText: true,
-                ),
               ],
             ),
           ),
@@ -88,7 +82,6 @@ class _UserListState extends State<UserList> {
                   id: user.id,
                   username: usernameController.text,
                   email: emailController.text,
-                  password: passwordController.text,
                 );
                 DatabaseHelper.instance.updateUser(updatedUser).then((value) {
                   _fetchUsers();
@@ -110,7 +103,6 @@ class _UserListState extends State<UserList> {
   void _addUser() {
     TextEditingController usernameController = TextEditingController();
     TextEditingController emailController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
 
     showDialog(
       context: context,
@@ -130,11 +122,6 @@ class _UserListState extends State<UserList> {
                   controller: emailController,
                   decoration: InputDecoration(labelText: 'Email'),
                 ),
-                TextField(
-                  controller: passwordController,
-                  decoration: InputDecoration(labelText: 'Password'),
-                  obscureText: true,
-                ),
               ],
             ),
           ),
@@ -144,7 +131,6 @@ class _UserListState extends State<UserList> {
                 final newUser = User(
                   username: usernameController.text,
                   email: emailController.text,
-                  password: passwordController.text,
                 );
                 DatabaseHelper.instance.insertUser(newUser).then((value) {
                   _fetchUsers();
@@ -199,15 +185,7 @@ class _UserListState extends State<UserList> {
               color: Colors.cyan,
             ),
             title: Text(user.username),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(user.email),
-                Text('Password: ${user.password}'),
-                if (user.createdAt != null) 
-                  Text('Created At: ${user.createdAt}'),
-              ],
-            ),
+            subtitle: Text(user.email),
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
               children: [

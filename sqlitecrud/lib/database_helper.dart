@@ -20,6 +20,7 @@ class DatabaseHelper {
   Future<Database> initDb() async {
     String databasesPath = await getDatabasesPath();
     String path = join(databasesPath, 'appDB.db');
+    
     return await openDatabase(
       path,
       version: 1,
@@ -83,26 +84,10 @@ class DatabaseHelper {
 
   Future<void> initializeUsers() async {
     List<User> usersToAdd = [
-      User(
-        username: 'John',
-        email: 'john@example.com',
-        password: 'password123',
-      ),
-      User(
-        username: 'Jane',
-        email: 'jane@example.com',
-        password: 'password123',
-      ),
-      User(
-        username: 'Alice',
-        email: 'alice@example.com',
-        password: 'password123',
-      ),
-      User(
-        username: 'Bob',
-        email: 'bob@example.com',
-        password: 'password123',
-      ),
+      User(username: 'John', email: 'john@example.com'),
+      User(username: 'Jane', email: 'jane@example.com'),
+      User(username: 'Alice', email: 'alice@example.com'),
+      User(username: 'Bob', email: 'bob@example.com'),
     ];
 
     for (User user in usersToAdd) {
