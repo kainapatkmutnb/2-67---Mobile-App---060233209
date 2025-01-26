@@ -20,7 +20,11 @@ class DatabaseHelper {
   Future<Database> initDb() async {
     String databasesPath = await getDatabasesPath();
     String path = join(databasesPath, 'appDB.db');
-    return await openDatabase(path, version: 1, onCreate: _onCreate);
+    return await openDatabase(
+      path,
+      version: 1,
+      onCreate: _onCreate,
+    );
   }
 
   Future _onCreate(Database db, int version) async {
@@ -29,8 +33,8 @@ class DatabaseHelper {
         id INTEGER PRIMARY KEY,
         username TEXT,
         email TEXT,
-        password TEXT,     // Added password column
-        createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP  // Added createdAt column
+        password TEXT,
+        createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     ''');
   }
@@ -52,9 +56,9 @@ class DatabaseHelper {
   Future<int> updateUser(User user) async {
     Database db = await instance.db;
     return await db.update(
-      'tbUsers', 
-      user.toMap(), 
-      where: 'id = ?', 
+      'tbUsers',
+      user.toMap(),
+      where: 'id = ?',
       whereArgs: [user.id],
     );
   }
@@ -62,8 +66,8 @@ class DatabaseHelper {
   Future<int> deleteUser(int id) async {
     Database db = await instance.db;
     return await db.delete(
-      'tbUsers', 
-      where: 'id = ?', 
+      'tbUsers',
+      where: 'id = ?',
       whereArgs: [id],
     );
   }
@@ -79,10 +83,26 @@ class DatabaseHelper {
 
   Future<void> initializeUsers() async {
     List<User> usersToAdd = [
-      User(username: 'John', email: 'john@example.com'),
-      User(username: 'Jane', email: 'jane@example.com'),
-      User(username: 'Alice', email: 'alice@example.com'),
-      User(username: 'Bob', email: 'bob@example.com'),
+      User(
+        username: 'John',
+        email: 'john@example.com',
+        password: 'password123',
+      ),
+      User(
+        username: 'Jane',
+        email: 'jane@example.com',
+        password: 'password123',
+      ),
+      User(
+        username: 'Alice',
+        email: 'alice@example.com',
+        password: 'password123',
+      ),
+      User(
+        username: 'Bob',
+        email: 'bob@example.com',
+        password: 'password123',
+      ),
     ];
 
     for (User user in usersToAdd) {
