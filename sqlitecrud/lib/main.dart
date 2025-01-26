@@ -10,6 +10,8 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -21,6 +23,8 @@ class MyApp extends StatelessWidget {
 }
 
 class UserList extends StatefulWidget {
+  const UserList({super.key});
+
   @override
   _UserListState createState() => _UserListState();
 }
@@ -202,11 +206,11 @@ class _UserListState extends State<UserList> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addUser,
+        backgroundColor: const Color.fromARGB(214, 5, 147, 255),
         child: Icon(
           Icons.add,
           color: Colors.white,
         ),
-        backgroundColor: const Color.fromARGB(214, 5, 147, 255),
       ),
     );
   }
