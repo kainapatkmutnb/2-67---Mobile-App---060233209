@@ -1,23 +1,25 @@
-import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
 import 'user.dart';
 
 class DatabaseHelper {
-  static final DatabaseHelper _instance = DatabaseHelper._internal();
-  factory DatabaseHelper() => _instance;
+  static final DatabaseHelper instance = DatabaseHelper._instance();
   static Database? _database;
 
-  DatabaseHelper._internal();
+  DatabaseHelper._instance();
+
+  //------------------------
+  // Database Initialization
+  //------------------------
 
   Future<Database> get db async {
-    if (_database != null) return _database!;
-    _database = await _initDb();
+    _database ??= await initDb();
     return _database!;
   }
 
-  Future<Database> _initDb() async {
-    final dbPath = await getDatabasesPath();
-    final path = join(dbPath, 'databasesapp.db');
+  Future<Database> initDb() async {
+    String databasesPath = await getDatabasesPath();
+    String path = join(databasesPath, 'appDB.db');
 
     return await openDatabase(
       path,
@@ -26,7 +28,7 @@ class DatabaseHelper {
     );
   }
 
-  Future<void> _onCreate(Database db, int version) async {
+  Future _onCreate(Database db, int version) async {
     await db.execute('''
       CREATE TABLE tbUsers (
         id INTEGER PRIMARY KEY,
@@ -38,21 +40,22 @@ class DatabaseHelper {
     ''');
   }
 
-  // Insert a new user into the database
+  //------------------------
+  // CRUD Operations
+  //------------------------
+
   Future<int> insertUser(User user) async {
-    Database db = await this.db;
+    Database db = await instance.db;
     return await db.insert('tbUsers', user.toMap());
   }
 
-  // Query all users from the database
   Future<List<Map<String, dynamic>>> queryAllUsers() async {
-    Database db = await this.db;
+    Database db = await instance.db;
     return await db.query('tbUsers');
   }
 
-  // Update user information in the database
   Future<int> updateUser(User user) async {
-    Database db = await this.db;
+    Database db = await instance.db;
     return await db.update(
       'tbUsers',
       user.toMap(),
@@ -61,9 +64,8 @@ class DatabaseHelper {
     );
   }
 
-  // Delete user from the database
   Future<int> deleteUser(int id) async {
-    Database db = await this.db;
+    Database db = await instance.db;
     return await db.delete(
       'tbUsers',
       where: 'id = ?',
@@ -71,13 +73,15 @@ class DatabaseHelper {
     );
   }
 
-  // Delete all users from the database
+  //------------------------
+  // Utility Methods
+  //------------------------
+
   Future<void> deleteAllUsers() async {
-    Database db = await this.db;
+    Database db = await instance.db;
     await db.delete('tbUsers');
   }
 
-  // Initialize some default users in the database
   Future<void> initializeUsers() async {
     List<User> usersToAdd = [
       User(
@@ -89,6 +93,18 @@ class DatabaseHelper {
       User(
         username: 'Jane',
         email: 'jane@example.com',
+        password: 'password123',
+        createdAt: DateTime.now().toString(),
+      ),
+      User(
+        username: 'Alice',
+        email: 'alice@example.com',
+        password: 'password123',
+        createdAt: DateTime.now().toString(),
+      ),
+      User(
+        username: 'Bob',
+        email: 'bob@example.com',
         password: 'password123',
         createdAt: DateTime.now().toString(),
       ),
