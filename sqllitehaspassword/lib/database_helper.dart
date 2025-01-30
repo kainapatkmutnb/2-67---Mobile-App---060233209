@@ -31,7 +31,7 @@ class DatabaseHelper {
         username TEXT,
         email TEXT,
         password TEXT,
-        createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        createdAt
       )
     ''');
   }
