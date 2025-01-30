@@ -199,7 +199,7 @@ class _UserListState extends State<UserList> {
               color: Colors.cyan,
             ),
             title: Text(user.username),
-            subtitle: Text('${user.email}\nCreated At: ${user.createdAt}'),
+            subtitle: Text('${user.email}\n${user.createdAt}'),
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
