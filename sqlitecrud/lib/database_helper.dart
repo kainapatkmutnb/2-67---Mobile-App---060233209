@@ -8,10 +8,6 @@ class DatabaseHelper {
 
   DatabaseHelper._instance();
 
-  //------------------------
-  // Database Initialization
-  //------------------------
-
   Future<Database> get db async {
     _database ??= await initDb();
     return _database!;
@@ -20,7 +16,7 @@ class DatabaseHelper {
   Future<Database> initDb() async {
     String databasesPath = await getDatabasesPath();
     String path = join(databasesPath, 'appDB.db');
-    
+
     return await openDatabase(
       path,
       version: 1,
@@ -33,16 +29,10 @@ class DatabaseHelper {
       CREATE TABLE tbUsers (
         id INTEGER PRIMARY KEY,
         username TEXT,
-        email TEXT,
-        password TEXT,
-        createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        email TEXT
       )
     ''');
   }
-
-  //------------------------
-  // CRUD Operations
-  //------------------------
 
   Future<int> insertUser(User user) async {
     Database db = await instance.db;
@@ -72,10 +62,6 @@ class DatabaseHelper {
       whereArgs: [id],
     );
   }
-
-  //------------------------
-  // Utility Methods
-  //------------------------
 
   Future<void> deleteAllUsers() async {
     Database db = await instance.db;
