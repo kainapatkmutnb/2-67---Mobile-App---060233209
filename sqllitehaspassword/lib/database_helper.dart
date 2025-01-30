@@ -8,10 +8,6 @@ class DatabaseHelper {
 
   DatabaseHelper._instance();
 
-  //------------------------
-  // Database Initialization
-  //------------------------
-
   Future<Database> get db async {
     _database ??= await initDb();
     return _database!;
@@ -39,10 +35,6 @@ class DatabaseHelper {
       )
     ''');
   }
-
-  //------------------------
-  // CRUD Operations
-  //------------------------
 
   Future<int> insertUser(User user) async {
     Database db = await instance.db;
@@ -73,10 +65,6 @@ class DatabaseHelper {
     );
   }
 
-  //------------------------
-  // Utility Methods
-  //------------------------
-
   Future<void> deleteAllUsers() async {
     Database db = await instance.db;
     await db.delete('tbUsers');
@@ -87,25 +75,25 @@ class DatabaseHelper {
       User(
         username: 'John',
         email: 'john@example.com',
-        password: 'password123',
+        password: 'password',
         createdAt: DateTime.now().toString(),
       ),
       User(
         username: 'Jane',
         email: 'jane@example.com',
-        password: 'password123',
+        password: 'password',
         createdAt: DateTime.now().toString(),
       ),
       User(
         username: 'Alice',
         email: 'alice@example.com',
-        password: 'password123',
+        password: 'password',
         createdAt: DateTime.now().toString(),
       ),
       User(
         username: 'Bob',
         email: 'bob@example.com',
-        password: 'password123',
+        password: 'password',
         createdAt: DateTime.now().toString(),
       ),
     ];
