@@ -72,30 +72,30 @@ class DatabaseHelper {
 
   Future<void> initializeUsers() async {
     List<User> usersToAdd = [
-      User(
-        username: 'John',
-        email: 'john@example.com',
-        password: 'password',
-        createdAt: DateTime.now().toString(),
-      ),
-      User(
-        username: 'Jane',
-        email: 'jane@example.com',
-        password: 'password',
-        createdAt: DateTime.now().toString(),
-      ),
-      User(
-        username: 'Alice',
-        email: 'alice@example.com',
-        password: 'password',
-        createdAt: DateTime.now().toString(),
-      ),
-      User(
-        username: 'Bob',
-        email: 'bob@example.com',
-        password: 'password',
-        createdAt: DateTime.now().toString(),
-      ),
+      // User(
+      //   username: 'John',
+      //   email: 'john@example.com',
+      //   password: 'password',
+      //   createdAt: DateTime.now().toString(),
+      // ),
+      // User(
+      //   username: 'Jane',
+      //   email: 'jane@example.com',
+      //   password: 'password',
+      //   createdAt: DateTime.now().toString(),
+      // ),
+      // User(
+      //   username: 'Alice',
+      //   email: 'alice@example.com',
+      //   password: 'password',
+      //   createdAt: DateTime.now().toString(),
+      // ),
+      // User(
+      //   username: 'Bob',
+      //   email: 'bob@example.com',
+      //   password: 'password',
+      //   createdAt: DateTime.now().toString(),
+      // ),
     ];
 
     for (User user in usersToAdd) {
