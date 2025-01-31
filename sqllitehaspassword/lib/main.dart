@@ -1,231 +1,125 @@
 import 'package:flutter/material.dart';
-import 'database_helper.dart';
-import 'user.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  final dbHelper = DatabaseHelper.instance;
-  await dbHelper.initializeUsers();
-  runApp(MyApp());
+void main() {
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'GFG User List',
-      home: UserList(),
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        // This is the theme of your application.
+        //
+        // TRY THIS: Try running your application with "flutter run". You'll see
+        // the application has a purple toolbar. Then, without quitting the app,
+        // try changing the seedColor in the colorScheme below to Colors.green
+        // and then invoke "hot reload" (save your changes or press the "hot
+        // reload" button in a Flutter-supported IDE, or press "r" if you used
+        // the command line to start the app).
+        //
+        // Notice that the counter didn't reset back to zero; the application
+        // state is not lost during the reload. To reset the state, use hot
+        // restart instead.
+        //
+        // This works for code too, not just values: Most code changes can be
+        // tested with just a hot reload.
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+      ),
+      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
-class UserList extends StatefulWidget {
-  const UserList({super.key});
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key, required this.title});
+
+  // This widget is the home page of your application. It is stateful, meaning
+  // that it has a State object (defined below) that contains fields that affect
+  // how it looks.
+
+  // This class is the configuration for the state. It holds the values (in this
+  // case the title) provided by the parent (in this case the App widget) and
+  // used by the build method of the State. Fields in a Widget subclass are
+  // always marked "final".
+
+  final String title;
 
   @override
-  _UserListState createState() => _UserListState();
+  State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _UserListState extends State<UserList> {
-  List<User> _users = [];
+class _MyHomePageState extends State<MyHomePage> {
+  int _counter = 0;
 
-  @override
-  void initState() {
-    super.initState();
-    _fetchUsers();
-  }
-
-  Future<void> _fetchUsers() async {
-    final userMaps = await DatabaseHelper.instance.queryAllUsers();
+  void _incrementCounter() {
     setState(() {
-      _users = userMaps.map((userMap) => User.fromMap(userMap)).toList();
+      // This call to setState tells the Flutter framework that something has
+      // changed in this State, which causes it to rerun the build method below
+      // so that the display can reflect the updated values. If we changed
+      // _counter without calling setState(), then the build method would not be
+      // called again, and so nothing would appear to happen.
+      _counter++;
     });
-  }
-
-  Future<void> _deleteUser(int userId) async {
-    await DatabaseHelper.instance.deleteUser(userId);
-    _fetchUsers();
-  }
-
-  void _editUser(User user) {
-    TextEditingController usernameController = TextEditingController(text: user.username);
-    TextEditingController emailController = TextEditingController(text: user.email);
-    TextEditingController passwordController = TextEditingController(text: user.password);
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Edit User'),
-          content: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextField(
-                  controller: usernameController,
-                  decoration: InputDecoration(labelText: 'Username'),
-                ),
-                TextField(
-                  controller: emailController,
-                  decoration: InputDecoration(labelText: 'Email'),
-                ),
-                TextField(
-                  controller: passwordController,
-                  decoration: InputDecoration(labelText: 'Password'),
-                ),
-              ],
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                final updatedUser = User(
-                  id: user.id,
-                  username: usernameController.text,
-                  email: emailController.text,
-                  password: passwordController.text,
-                  createdAt: user.createdAt,
-                );
-                DatabaseHelper.instance.updateUser(updatedUser).then((value) {
-                  _fetchUsers();
-                  Navigator.pop(context);
-                });
-              },
-              child: Text('Save'),
-            ),
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text('Cancel'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void _addUser() {
-    TextEditingController usernameController = TextEditingController();
-    TextEditingController emailController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Add New User'),
-          content: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextField(
-                  controller: usernameController,
-                  decoration: InputDecoration(labelText: 'Username'),
-                ),
-                TextField(
-                  controller: emailController,
-                  decoration: InputDecoration(labelText: 'Email'),
-                ),
-                TextField(
-                  controller: passwordController,
-                  decoration: InputDecoration(labelText: 'Password'),
-                ),
-              ],
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                final newUser = User(
-                  username: usernameController.text,
-                  email: emailController.text,
-                  password: passwordController.text,
-                  createdAt: DateTime.now().toString(),
-                );
-                DatabaseHelper.instance.insertUser(newUser).then((value) {
-                  _fetchUsers();
-                  Navigator.pop(context);
-                });
-              },
-              child: Text('Add'),
-            ),
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text('Cancel'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  Future<void> _deleteAllUsers() async {
-    await DatabaseHelper.instance.deleteAllUsers();
-    _fetchUsers();
   }
 
   @override
   Widget build(BuildContext context) {
+    // This method is rerun every time setState is called, for instance as done
+    // by the _incrementCounter method above.
+    //
+    // The Flutter framework has been optimized to make rerunning build methods
+    // fast, so that you can just rebuild anything that needs updating rather
+    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'GFG User List',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-        ),
-        backgroundColor: const Color.fromARGB(214, 5, 147, 255),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.delete_forever_outlined),
-            onPressed: _deleteAllUsers,
-            color: Colors.redAccent,
-          ),
-        ],
+        // TRY THIS: Try changing the color here to a specific color (to
+        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
+        // change color while the other colors stay the same.
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        // Here we take the value from the MyHomePage object that was created by
+        // the App.build method, and use it to set our appbar title.
+        title: Text(widget.title),
       ),
-      body: ListView.builder(
-        itemCount: _users.length,
-        itemBuilder: (context, index) {
-          final user = _users[index];
-          return ListTile(
-            leading: Icon(
-              Icons.account_circle,
-              color: Colors.cyan,
+      body: Center(
+        // Center is a layout widget. It takes a single child and positions it
+        // in the middle of the parent.
+        child: Column(
+          // Column is also a layout widget. It takes a list of children and
+          // arranges them vertically. By default, it sizes itself to fit its
+          // children horizontally, and tries to be as tall as its parent.
+          //
+          // Column has various properties to control how it sizes itself and
+          // how it positions its children. Here we use mainAxisAlignment to
+          // center the children vertically; the main axis here is the vertical
+          // axis because Columns are vertical (the cross axis would be
+          // horizontal).
+          //
+          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
+          // action in the IDE, or press "p" in the console), to see the
+          // wireframe for each widget.
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text(
+              'You have pushed the button this many times:',
             ),
-            title: Text(user.username),
-            subtitle: Text('${user.email}\n${user.createdAt}'),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                IconButton(
-                  icon: Icon(Icons.edit),
-                  onPressed: () => _editUser(user),
-                  color: Colors.lightBlueAccent,
-                ),
-                IconButton(
-                  icon: Icon(Icons.delete),
-                  onPressed: () => _deleteUser(user.id!),
-                  color: Colors.redAccent,
-                ),
-              ],
+            Text(
+              '$_counter',
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
-          );
-        },
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _addUser,
-        backgroundColor: const Color.fromARGB(214, 5, 147, 255),
-        child: Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
-      ),
+        onPressed: _incrementCounter,
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
+      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
