@@ -22,13 +22,13 @@ class DatabaseHelper {
     return await openDatabase(
       path,
       version: 3, // Update version to apply new schema changes
-      onCreate: onCreate,
+      onCreate: _onCreate,
       onUpgrade: _onUpgrade,
     );
   }
 
   // Create the table (New Users)
-  Future onCreate(Database db, int version) async {
+  Future _onCreate(Database db, int version) async {
     await db.execute('''
       CREATE TABLE tbUsers (
         id INTEGER PRIMARY KEY,
@@ -44,7 +44,7 @@ class DatabaseHelper {
   }
 
   // Upgrade the database (Existing Users)
-  Future onUpgrade(Database db, int oldVersion, int newVersion) async {
+  Future _onUpgrade(Database db, int oldVersion, int newVersion) async {
     if (oldVersion < 3) {
       await db.execute('ALTER TABLE tbUsers ADD COLUMN bmi REAL');
       await db.execute('ALTER TABLE tbUsers ADD COLUMN bmi_type TEXT');
