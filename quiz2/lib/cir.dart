@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class Cir extends StatefulWidget {
   final double radius;
 
-  Cir({required this.radius});
+  const Cir({super.key, required this.radius});
 
   @override
   _CirState createState() => _CirState();

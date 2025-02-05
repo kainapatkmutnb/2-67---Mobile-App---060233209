@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(ATMApp());
+  runApp(const ATMApp());
 }
 
 class ATMApp extends StatelessWidget {
@@ -9,7 +9,7 @@ class ATMApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'ATM-1999',
       debugShowCheckedModeBanner: false,
       home: ATMHomePage(),

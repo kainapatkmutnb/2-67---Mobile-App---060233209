@@ -41,10 +41,10 @@ class ClCreateState extends State<ClCreate> {
                       height: 50,
                       child: ElevatedButton(
                         onPressed: () {
-                          print('Your Name: ' + yourName.text);
-                          print('Sur Name: ' + surName.text);
-                          print('Your University: ' + yourUniversity.text);
-                          print('Your Faculty: ' + yourFaculty.text);
+                          print('Your Name: ${yourName.text}');
+                          print('Sur Name: ${surName.text}');
+                          print('Your University: ${yourUniversity.text}');
+                          print('Your Faculty: ${yourFaculty.text}');
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blueAccent,

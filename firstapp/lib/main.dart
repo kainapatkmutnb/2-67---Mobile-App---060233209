@@ -67,7 +67,7 @@ class _MyHomepageState extends State<MyHomepage> {
           });
         },
         backgroundColor: const Color.fromARGB(255, 113, 162, 202),
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }
