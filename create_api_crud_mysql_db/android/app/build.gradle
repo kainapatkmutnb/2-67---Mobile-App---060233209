@@ -13,8 +13,6 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
-        // Add the following line to suppress warnings about obsolete options
-        options.compilerArgs << "-Xlint:-options"
     }
 
     kotlinOptions {
