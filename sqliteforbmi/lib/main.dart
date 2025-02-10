@@ -53,11 +53,15 @@ class UserListState extends State<UserList> {
   }
 
   void _editUser(User user) {
-    TextEditingController usernameController = TextEditingController(text: user.username);
-    TextEditingController emailController = TextEditingController(text: user.email);
+    TextEditingController usernameController =
+        TextEditingController(text: user.username);
+    TextEditingController emailController =
+        TextEditingController(text: user.email);
     TextEditingController pwdController = TextEditingController(text: user.pwd);
-    TextEditingController weightController = TextEditingController(text: user.weight.toString());
-    TextEditingController heightController = TextEditingController(text: user.height.toString());
+    TextEditingController weightController =
+        TextEditingController(text: user.weight.toString());
+    TextEditingController heightController =
+        TextEditingController(text: user.height.toString());
 
     showDialog(
       context: context,
@@ -114,7 +118,8 @@ class UserListState extends State<UserList> {
               child: const Text('Save'),
             ),
             TextButton(
-              onPressed: () => Navigator.pop(context), // Close the dialog without saving
+              onPressed: () =>
+                  Navigator.pop(context), // Close the dialog without saving
               child: const Text('Cancel'),
             ),
           ],
@@ -184,7 +189,8 @@ class UserListState extends State<UserList> {
               child: const Text('Add'),
             ),
             TextButton(
-              onPressed: () => Navigator.pop(context), // Close the dialog without adding
+              onPressed: () =>
+                  Navigator.pop(context), // Close the dialog without adding
               child: const Text('Cancel'),
             ),
           ],
@@ -217,16 +223,18 @@ class UserListState extends State<UserList> {
         itemBuilder: (context, index) {
           final user = _users[index];
           return ListTile(
-            leading: Column(
+            leading: Row(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 const Icon(
                   Icons.account_circle,
-                  color: Colors.cyanAccent,
+                  color: Colors.cyan,
                 ),
+                const SizedBox(width: 5), // Add some spacing between the icon and the image
                 Image.asset(
                   user.bmiImage,
-                  width: 50,
-                  height: 50,
+                  width: 40, // Adjusted width
+                  height: 40, // Adjusted height
                 ),
               ],
             ),
@@ -254,7 +262,7 @@ class UserListState extends State<UserList> {
                 IconButton(
                   icon: const Icon(Icons.edit),
                   onPressed: () => _editUser(user), // Edit action
-                  color: Colors.lightBlueAccent,
+                  color: Colors.lightBlue,
                 ),
                 IconButton(
                   icon: const Icon(Icons.delete),
