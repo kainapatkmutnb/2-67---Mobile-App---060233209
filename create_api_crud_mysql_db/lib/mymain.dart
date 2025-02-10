@@ -47,43 +47,47 @@ class _ShowInfState extends State<ShowInf> {
         title: Text("DB Test"),
       ),
       body: Center(
-        child: ListView.builder(
-          itemCount: list.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Card(
-              child: ListTile(
-                title: Row(
-                  children: [
-                    Expanded(child: Text(list[index]["name"])),
-                    Expanded(child: Text(list[index]["email"])),
-                  ],
+        child: SingleChildScrollView(
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: list.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Card(
+                child: ListTile(
+                  title: Row(
+                    children: [
+                      Expanded(child: Text(list[index]["name"])),
+                      Expanded(child: Text(list[index]["email"])),
+                    ],
+                  ),
+                  leading: Text(list[index]["id"].toString()),
+                  trailing: Wrap(
+                    spacing: 5,
+                    children: [
+                      IconButton(
+                        icon: Icon(Icons.edit, color: Colors.green),
+                        onPressed: () {
+                          Map data = {
+                            'id': list[index]['id'],
+                            'name': list[index]["name"],
+                            'email': list[index]['email'],
+                            'phone': list[index]['phone'],
+                            'address': list[index]['address'],
+                          };
+                          _showEdit(data);
+                        },
+                      ),
+                      IconButton(
+                        icon:
+                            const Icon(Icons.delete_outline, color: Colors.red),
+                        onPressed: () => _showDel(list[index]["id"]),
+                      ),
+                    ],
+                  ),
                 ),
-                leading: Text(list[index]["id"].toString()),
-                trailing: Wrap(
-                  spacing: 5,
-                  children: [
-                    IconButton(
-                      icon: Icon(Icons.edit, color: Colors.green),
-                      onPressed: () {
-                        Map data = {
-                          'id': list[index]['id'],
-                          'name': list[index]["name"],
-                          'email': list[index]['email'],
-                          'phone': list[index]['phone'],
-                          'address': list[index]['address'],
-                        };
-                        _showEdit(data);
-                      },
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.delete_outline, color: Colors.red),
-                      onPressed: () => _showDel(list[index]["id"]),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
