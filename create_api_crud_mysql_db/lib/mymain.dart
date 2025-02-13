@@ -3,7 +3,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-main() {
+void main() {
   runApp(const ShowInf());
 }
 
@@ -42,7 +42,7 @@ class _ShowInfState extends State<ShowInf> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('DB Test'),
+        title: const Text('DB Test'),
       ),
       body: Center(
         child: ListView.builder(
@@ -69,17 +69,18 @@ class _ShowInfState extends State<ShowInf> {
                           'email': list[index]['email'],
                           'phone': list[index]['phone']
                         };
-                        _showedit(data);
+                        _showEditDialog(data);
                       },
-                      icon: Icon(Icons.edit),
+                      icon: const Icon(Icons.edit),
                       color: Colors.green,
                     ),
                     IconButton(
-                        onPressed: () => _showDel(list[index]["id"]),
-                        icon: const Icon(
-                          Icons.delete_outline,
-                          color: Colors.red,
-                        )),
+                      onPressed: () => _showDeleteDialog(list[index]["id"]),
+                      icon: const Icon(
+                        Icons.delete_outline,
+                        color: Colors.red,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -88,85 +89,89 @@ class _ShowInfState extends State<ShowInf> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _addNewDialog();
-        },
+        onPressed: _showAddDialog,
         child: const Icon(Icons.add),
       ),
     );
   }
 
-  Future<void> _addNewDialog() async {
+  Future<void> _showAddDialog() async {
     return showDialog(
-        barrierDismissible: false,
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Add emp'),
-            content: SingleChildScrollView(
-                child: ListBody(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Add Employee'),
+          content: SingleChildScrollView(
+            child: ListBody(
               children: <Widget>[
                 TextField(
                   controller: _nameController,
                   decoration: const InputDecoration(
-                      labelText: 'Name', hintText: "Enter emp Name"),
+                      labelText: 'Name', hintText: "Enter employee name"),
                 ),
                 TextField(
                   controller: _emailController,
                   decoration: const InputDecoration(
-                      labelText: 'Email', hintText: "Enter emp Email"),
+                      labelText: 'Email', hintText: "Enter employee email"),
                 ),
                 TextField(
                   controller: _phoneController,
                   decoration: const InputDecoration(
-                      labelText: 'Phone', hintText: "Enter emp Phone"),
+                      labelText: 'Phone', hintText: "Enter employee phone"),
                 ),
                 TextField(
                   controller: _addressController,
                   decoration: const InputDecoration(
-                      labelText: 'Address', hintText: "Enter emp Address"),
+                      labelText: 'Address', hintText: "Enter employee address"),
                 ),
-                const Text('กรอกข้อมูลให้เรียบร้อยแล้วกด ยืนยัน'),
+                const Text('Fill in the details and press Confirm'),
               ],
-            )),
-            actions: <Widget>[
-              TextButton(
-                  onPressed: () {
-                    add_data();
-                    Navigator.of(context).pop();
-                  },
-                  child: Text('ยืนยัน')),
-            ],
-          );
-        });
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                addData();
+                Navigator.of(context).pop();
+              },
+              child: const Text('Confirm'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
-  Future<void> _showDel(int id) async {
+  Future<void> _showDeleteDialog(int id) async {
     return showDialog<void>(
-        barrierDismissible: false,
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('ลบข้อมูล ${id}'),
-            content: SingleChildScrollView(
-                child: ListBody(
-              children: <Widget>[
-                Text('ยืนยันการลบข้อมูล กด ยืนยัน'),
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Delete data $id'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('Confirm deletion by pressing Confirm'),
               ],
-            )),
-            actions: <Widget>[
-              TextButton(
-                  onPressed: () {
-                    del_data(id);
-                    Navigator.of(context).pop();
-                  },
-                  child: Text('ยืนยัน')),
-            ],
-          );
-        });
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                deleteData(id);
+                Navigator.of(context).pop();
+              },
+              child: const Text('Confirm'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
-  void add_data() async {
+  void addData() async {
     Map data = {
       'name': _nameController.text,
       'email': _emailController.text,
@@ -185,7 +190,7 @@ class _ShowInfState extends State<ShowInf> {
     listData();
   }
 
-  void del_data(int id) async {
+  void deleteData(int id) async {
     var response = await http.delete(Uri.http('10.0.2.2:8080', 'delete/$id'),
         headers: {
           "Content-Type": "application/json; charset=UTF-8",
@@ -196,56 +201,59 @@ class _ShowInfState extends State<ShowInf> {
     listData();
   }
 
-  Future<void> _showedit(Map data) async {
+  Future<void> _showEditDialog(Map data) async {
     _nameController.text = data['name'];
     _emailController.text = data['email'];
     _phoneController.text = data['phone'];
     _addressController.text = data['address'];
     return showDialog<void>(
-        barrierDismissible: false,
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('ทดสอบการ Edit'),
-            content: SingleChildScrollView(
-                child: ListBody(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Edit Employee'),
+          content: SingleChildScrollView(
+            child: ListBody(
               children: <Widget>[
                 TextField(
                   controller: _nameController,
                   decoration: const InputDecoration(
-                      labelText: 'Name', hintText: "Enter emp Name"),
+                      labelText: 'Name', hintText: "Enter employee name"),
                 ),
                 TextField(
                   controller: _emailController,
                   decoration: const InputDecoration(
-                      labelText: 'Email', hintText: "Enter emp Email"),
+                      labelText: 'Email', hintText: "Enter employee email"),
                 ),
                 TextField(
                   controller: _phoneController,
                   decoration: const InputDecoration(
-                      labelText: 'Phone', hintText: "Enter emp Phone"),
+                      labelText: 'Phone', hintText: "Enter employee phone"),
                 ),
                 TextField(
                   controller: _addressController,
                   decoration: const InputDecoration(
-                      labelText: 'Address', hintText: "Enter emp Address"),
+                      labelText: 'Address', hintText: "Enter employee address"),
                 ),
-                const Text('ปรับปรุงข้อมูลให้เรียบร้อยแล้วกด ยืนยัน'),
+                const Text('Update the details and press Confirm'),
               ],
-            )),
-            actions: <Widget>[
-              TextButton(
-                  onPressed: () {
-                    edit_data(data['id']);
-                    Navigator.of(context).pop();
-                  },
-                  child: Text('ยืนยัน')),
-            ],
-          );
-        });
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                editData(data['id']);
+                Navigator.of(context).pop();
+              },
+              child: const Text('Confirm'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
-  void edit_data(id) async {
+  void editData(int id) async {
     Map data = {
       'id': id,
       'name': _nameController.text,
