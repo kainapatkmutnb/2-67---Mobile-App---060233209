@@ -78,7 +78,8 @@ class _ShowInfState extends State<ShowInf> {
                         },
                       ),
                       IconButton(
-                        icon: const Icon(Icons.delete_outline, color: Colors.red),
+                        icon:
+                            const Icon(Icons.delete_outline, color: Colors.red),
                         onPressed: () => _showDel(list[index]["id"]),
                       ),
                     ],
@@ -144,6 +145,7 @@ class _ShowInfState extends State<ShowInf> {
             TextButton(
               child: const Text('Confirm'),
               onPressed: () {
+                print('Confirm button pressed');
                 addData();
                 Navigator.of(context).pop();
               },
@@ -191,18 +193,31 @@ class _ShowInfState extends State<ShowInf> {
     };
 
     var body = jsonEncode(data);
-    var response = await http.post(
-      Uri.http('10.4.13.41:8880', 'create'),
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      },
-      body: body,
-    );
+    try {
+      var response = await http.post(
+        Uri.http('10.4.13.41:8880', 'create'),
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: body,
+      );
 
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
-    listData();
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+
+      if (response.statusCode == 200) {
+        _nameController.clear();
+        _emailController.clear();
+        _phoneController.clear();
+        _addressController.clear();
+        listData();
+      } else {
+        print('Failed to add data');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
   }
 
   void delData(int id) async {
