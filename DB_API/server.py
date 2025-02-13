@@ -6,7 +6,8 @@ from flaskext.mysql import MySQL
 app = Flask(__name__)
 mysql = MySQL()
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'root'
+#app.config['MYSQL_DATABASE_PASSWORD'] = 'root'
+app.config['MYSQL_DATABASE_PASSWORD'] = ''
 app.config['MYSQL_DATABASE_DB'] = 'emp'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
@@ -15,8 +16,8 @@ mysql.init_app(app)
 def hello():
     return """
     Flask API !<br>
-    <a href='/new_user'>add</a>insert new<br>
-    <a href='/emp'>emp</a>Show all<br>
+    <a href='/new_user'>add</a> insert new<br>
+    <a href='/emp'>emp</a> Show all<br>
     <b>/create</b> Insert new Record<br>
     <b>/emp/<id></b> get by ID<br>
     <b>/update/<id></b> Edit info<br>
