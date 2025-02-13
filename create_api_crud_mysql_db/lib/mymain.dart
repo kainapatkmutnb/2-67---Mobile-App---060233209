@@ -44,48 +44,52 @@ class _ShowInfState extends State<ShowInf> {
       appBar: AppBar(
         title: const Text('DB Test'),
       ),
-      body: Center(
-        child: ListView.builder(
-          itemCount: list.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Card(
-              child: ListTile(
-                title: Row(
-                  children: [
-                    Expanded(child: Text(list[index]['name'])),
-                    Expanded(child: Text(list[index]['email'])),
-                  ],
-                ),
-                leading: Text(list[index]['id'].toString()),
-                trailing: Wrap(
-                  spacing: 5,
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        Map data = {
-                          'id': list[index]['id'],
-                          'name': list[index]['name'],
-                          'address': list[index]['address'],
-                          'email': list[index]['email'],
-                          'phone': list[index]['phone']
-                        };
-                        _showEditDialog(data);
-                      },
-                      icon: const Icon(Icons.edit),
-                      color: Colors.green,
-                    ),
-                    IconButton(
-                      onPressed: () => _showDeleteDialog(list[index]["id"]),
-                      icon: const Icon(
-                        Icons.delete_outline,
-                        color: Colors.red,
+      body: SingleChildScrollView(
+        child: Center(
+          child: ListView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: list.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Card(
+                child: ListTile(
+                  title: Row(
+                    children: [
+                      Expanded(child: Text(list[index]['name'])),
+                      Expanded(child: Text(list[index]['email'])),
+                    ],
+                  ),
+                  leading: Text(list[index]['id'].toString()),
+                  trailing: Wrap(
+                    spacing: 5,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          Map data = {
+                            'id': list[index]['id'],
+                            'name': list[index]['name'],
+                            'address': list[index]['address'],
+                            'email': list[index]['email'],
+                            'phone': list[index]['phone']
+                          };
+                          _showEditDialog(data);
+                        },
+                        icon: const Icon(Icons.edit),
+                        color: Colors.green,
                       ),
-                    ),
-                  ],
+                      IconButton(
+                        onPressed: () => _showDeleteDialog(list[index]["id"]),
+                        icon: const Icon(
+                          Icons.delete_outline,
+                          color: Colors.red,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -101,7 +105,7 @@ class _ShowInfState extends State<ShowInf> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Add Employee'),
+          title: const Text('Add New Employee'),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
