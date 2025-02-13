@@ -141,4 +141,4 @@ def delete_emp(emp_id):
 if __name__ == '__main__':
     from werkzeug.serving import run_simple
     app.debug = True
-    run_simple('localhost', 8880, app)
+    run_simple('localhost', 8080, app)
