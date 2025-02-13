@@ -23,7 +23,7 @@ class _ShowInfState extends State<ShowInf> {
 
   Future<String> listData() async {
     var response = await http.get(
-      Uri.http('10.0.2.2:80', 'emp'),
+      Uri.http('10.4.13.41:8880', 'emp'),
       headers: {"Accept": "application/json"},
     );
     print('Response status: ${response.statusCode}');
@@ -185,7 +185,7 @@ class _ShowInfState extends State<ShowInf> {
 
   void delData(int id) async {
     var response = await http.delete(
-      Uri.http('10.0.2.2:80', 'delete/$id'),
+      Uri.http('10.4.13.41:8880', 'delete/$id'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         "Accept": "application/json"
@@ -206,7 +206,7 @@ class _ShowInfState extends State<ShowInf> {
 
     var body = jsonEncode(data);
     var response = await http.post(
-      Uri.http('10.0.2.2:80', 'create'),
+      Uri.http('10.4.13.41:8880', 'create'),
       headers: {
         "Content-Type": "application/json",
         "Accept": "application/json"
@@ -289,7 +289,7 @@ class _ShowInfState extends State<ShowInf> {
 
     var body = jsonEncode(data);
     var response = await http.put(
-      Uri.http('10.0.2.2:80', 'update/$id'),
+      Uri.http('10.4.13.41:8880', 'update/$id'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
