@@ -1,4 +1,4 @@
-# my_app
+# create_api_crud_mysql_db
 
 A new Flutter project.
 
