@@ -125,8 +125,9 @@ class _ShowInfState extends State<ShowInf> {
                 ),
                 TextField(
                   controller: _phoneController,
+                  keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
-                      labelText: 'Phone', hintText: "Enter employee phone"),
+                    labelText: 'Phone', hintText: "Enter employee phone"),
                 ),
                 TextField(
                   controller: _addressController,
@@ -135,13 +136,15 @@ class _ShowInfState extends State<ShowInf> {
                 ),
                 TextField(
                   controller: _heightController,
+                  keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
-                      labelText: 'Height (cm)', hintText: "Enter height in cm"),
+                    labelText: 'Height (cm)', hintText: "Enter height in cm"),
                 ),
                 TextField(
                   controller: _weightController,
+                  keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
-                      labelText: 'Weight (kg)', hintText: "Enter weight in kg"),
+                    labelText: 'Weight (kg)', hintText: "Enter weight in kg"),
                 ),
                 const Text('Fill in the details and press Confirm'),
               ],
