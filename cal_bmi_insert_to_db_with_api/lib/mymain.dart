@@ -24,7 +24,7 @@ class _ShowInfState extends State<ShowInf> {
   final TextEditingController _weightController = TextEditingController();
 
   Future<String> listData() async {
-    var response = await http.get(Uri.http('10.0.2.2:8080', 'emp'),
+    var response = await http.get(Uri.http('192.168.0.106:8080', 'emp'),
         headers: {"Accept": "application/json"});
     print("Response status: ${response.statusCode}");
     print("Response body: ${response.body}");
@@ -206,7 +206,7 @@ class _ShowInfState extends State<ShowInf> {
       'bmiType': bmiType
     };
     var body = jsonEncode(data);
-    var response = await http.post(Uri.http('10.0.2.2:8080', 'create'),
+    var response = await http.post(Uri.http('192.168.0.106:8080', 'create'),
         headers: {
           "Content-Type": "application/json",
           "Accept": "application/json"
@@ -218,7 +218,7 @@ class _ShowInfState extends State<ShowInf> {
   }
 
   void deleteData(int id) async {
-    var response = await http.delete(Uri.http('10.0.2.2:8080', 'delete/$id'),
+    var response = await http.delete(Uri.http('192.168.0.106:8080', 'delete/$id'),
         headers: {
           "Content-Type": "application/json; charset=UTF-8",
           "Accept": "application/json"
@@ -310,7 +310,7 @@ class _ShowInfState extends State<ShowInf> {
       'bmiType': bmiType
     };
     var body = jsonEncode(data);
-    var response = await http.put(Uri.http('10.0.2.2:8080', 'update/$id'),
+    var response = await http.put(Uri.http('192.168.0.106:8080', 'update/$id'),
         headers: {
           "Content-Type": "application/json; charset=UTF-8",
         },
