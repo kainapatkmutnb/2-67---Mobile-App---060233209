@@ -55,13 +55,47 @@ class _ShowInfState extends State<ShowInf> {
             itemBuilder: (BuildContext context, int index) {
               return Card(
                 child: ListTile(
-                  title: Row(
+                  title: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Expanded(child: Text(list[index]['name'])),
-                      Expanded(child: Text(list[index]['email'])),
+                      Text(
+                        'Name: ${list[index]['name']}',
+                        style: TextStyle(fontSize: 14),
+                      ),
+                      Text(
+                        'Email: ${list[index]['email']}',
+                        style: TextStyle(fontSize: 14),
+                      ),
+                      Text(
+                        'Phone: ${list[index]['phone']}',
+                        style: TextStyle(fontSize: 14),
+                      ),
+                      Text(
+                        'Address: ${list[index]['address']}',
+                        style: TextStyle(fontSize: 14),
+                      ),
+                      Text(
+                        'Height: ${list[index]['height']} cm',
+                        style: TextStyle(fontSize: 14),
+                      ),
+                      Text(
+                        'Weight: ${list[index]['weight']} kg',
+                        style: TextStyle(fontSize: 14),
+                      ),
+                      Text(
+                        'BMI: ${list[index]['bmi']}',
+                        style: TextStyle(fontSize: 14),
+                      ),
+                      Text(
+                        'BMI Type: ${list[index]['bmiType']}',
+                        style: TextStyle(fontSize: 14),
+                      ),
                     ],
                   ),
-                  leading: Text(list[index]['id'].toString()),
+                  leading: Text(
+                    list[index]['id'].toString(),
+                    style: TextStyle(fontSize: 14),
+                  ),
                   trailing: Wrap(
                     spacing: 5,
                     children: [
@@ -127,7 +161,7 @@ class _ShowInfState extends State<ShowInf> {
                   controller: _phoneController,
                   keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
-                    labelText: 'Phone', hintText: "Enter employee phone"),
+                      labelText: 'Phone', hintText: "Enter employee phone"),
                 ),
                 TextField(
                   controller: _addressController,
@@ -138,13 +172,13 @@ class _ShowInfState extends State<ShowInf> {
                   controller: _heightController,
                   keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
-                    labelText: 'Height (cm)', hintText: "Enter height in cm"),
+                      labelText: 'Height (cm)', hintText: "Enter height in cm"),
                 ),
                 TextField(
                   controller: _weightController,
                   keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
-                    labelText: 'Weight (kg)', hintText: "Enter weight in kg"),
+                      labelText: 'Weight (kg)', hintText: "Enter weight in kg"),
                 ),
                 const Text('Fill in the details and press Confirm'),
               ],
@@ -221,11 +255,11 @@ class _ShowInfState extends State<ShowInf> {
   }
 
   void deleteData(int id) async {
-    var response = await http.delete(Uri.http('192.168.0.106:8080', 'delete/$id'),
-        headers: {
-          "Content-Type": "application/json; charset=UTF-8",
-          "Accept": "application/json"
-        });
+    var response = await http
+        .delete(Uri.http('192.168.0.106:8080', 'delete/$id'), headers: {
+      "Content-Type": "application/json; charset=UTF-8",
+      "Accept": "application/json"
+    });
     print("Response status: ${response.statusCode}");
     print("Response body: ${response.body}");
     listData();
