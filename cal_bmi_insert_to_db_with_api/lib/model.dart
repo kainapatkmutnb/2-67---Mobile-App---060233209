@@ -3,6 +3,7 @@ class Model {
   final String name;
   final String address;
   final String email;
+  final String phone;
   final String height;
   final String weight;
   final String bmi;
@@ -13,6 +14,7 @@ class Model {
     required this.name,
     required this.address,
     required this.email,
+    required this.phone,
     required this.height,
     required this.weight,
     required this.bmi,
@@ -25,6 +27,7 @@ class Model {
       name: json['name'],
       address: json['address'],
       email: json['email'],
+      phone: json['phone'],
       height: json['height'],
       weight: json['weight'],
       bmi: json['bmi'],
