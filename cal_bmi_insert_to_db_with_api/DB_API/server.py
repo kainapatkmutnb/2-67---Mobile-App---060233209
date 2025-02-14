@@ -66,7 +66,7 @@ def emp():
     try:
         conn = mysql.connect()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
-        cursor.execute("SELECT id, name, email, phone, address FROM emp")
+        cursor.execute("SELECT id, name, email, phone, address, height, weight, bmi, bmiType FROM emp")
         empRows = cursor.fetchall()
         response = jsonify(empRows)
         response.status_code = 200
@@ -84,7 +84,7 @@ def emp_details(emp_id):
     try:
         conn = mysql.connect()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
-        cursor.execute("SELECT id, name, email, phone, address FROM emp WHERE id =%s", emp_id)
+        cursor.execute("SELECT id, name, email, phone, address, height, weight, bmi, bmiType FROM emp WHERE id =%s", emp_id)
         empRow = cursor.fetchone()
         response = jsonify(empRow)
         response.status_code = 200
@@ -105,9 +105,13 @@ def update_emp(emp_id):
         _email = _json['email']
         _phone = _json['phone']
         _address = _json['address']
-        if _name and _email and _phone and _address and emp_id and request.method == 'PUT':
-            sqlQuery = "UPDATE emp SET name=%s, email=%s, phone=%s, address=%s WHERE id=%s"
-            bindData = (_name, _email, _phone, _address, emp_id)
+        _height = _json['height']
+        _weight = _json['weight']
+        _bmi = _json['bmi']
+        _bmiType = _json['bmiType']
+        if _name and _email and _phone and _address and _height and _weight and _bmi and _bmiType and emp_id and request.method == 'PUT':
+            sqlQuery = """UPDATE emp SET name=%s, email=%s, phone=%s, address=%s, height=%s, weight=%s, bmi=%s, bmiType=%s WHERE id=%s"""
+            bindData = (_name, _email, _phone, _address, _height, _weight, _bmi, _bmiType, emp_id)
             conn = mysql.connect()
             cursor = conn.cursor()
             cursor.execute(sqlQuery, bindData)
