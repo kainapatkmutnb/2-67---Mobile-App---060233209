@@ -20,6 +20,8 @@ class _ShowInfState extends State<ShowInf> {
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _heightController = TextEditingController();
+  final TextEditingController _weightController = TextEditingController();
 
   Future<String> listData() async {
     var response = await http.get(Uri.http('10.0.2.2:8080', 'emp'),
@@ -70,7 +72,9 @@ class _ShowInfState extends State<ShowInf> {
                             'name': list[index]['name'],
                             'address': list[index]['address'],
                             'email': list[index]['email'],
-                            'phone': list[index]['phone']
+                            'phone': list[index]['phone'],
+                            'height': list[index]['height'],
+                            'weight': list[index]['weight']
                           };
                           _showEditDialog(data);
                         },
@@ -129,6 +133,16 @@ class _ShowInfState extends State<ShowInf> {
                   decoration: const InputDecoration(
                       labelText: 'Address', hintText: "Enter employee address"),
                 ),
+                TextField(
+                  controller: _heightController,
+                  decoration: const InputDecoration(
+                      labelText: 'Height (cm)', hintText: "Enter height in cm"),
+                ),
+                TextField(
+                  controller: _weightController,
+                  decoration: const InputDecoration(
+                      labelText: 'Weight (kg)', hintText: "Enter weight in kg"),
+                ),
                 const Text('Fill in the details and press Confirm'),
               ],
             ),
@@ -176,11 +190,20 @@ class _ShowInfState extends State<ShowInf> {
   }
 
   void addData() async {
+    double height = double.parse(_heightController.text) / 100;
+    double weight = double.parse(_weightController.text);
+    double bmi = weight / (height * height);
+    String bmiType = _getBmiType(bmi);
+
     Map data = {
       'name': _nameController.text,
       'email': _emailController.text,
       'phone': _phoneController.text,
-      'address': _addressController.text
+      'address': _addressController.text,
+      'height': _heightController.text,
+      'weight': _weightController.text,
+      'bmi': bmi.toStringAsFixed(2),
+      'bmiType': bmiType
     };
     var body = jsonEncode(data);
     var response = await http.post(Uri.http('10.0.2.2:8080', 'create'),
@@ -210,6 +233,8 @@ class _ShowInfState extends State<ShowInf> {
     _emailController.text = data['email'];
     _phoneController.text = data['phone'];
     _addressController.text = data['address'];
+    _heightController.text = data['height'];
+    _weightController.text = data['weight'];
     return showDialog<void>(
       barrierDismissible: false,
       context: context,
@@ -239,6 +264,16 @@ class _ShowInfState extends State<ShowInf> {
                   decoration: const InputDecoration(
                       labelText: 'Address', hintText: "Enter employee address"),
                 ),
+                TextField(
+                  controller: _heightController,
+                  decoration: const InputDecoration(
+                      labelText: 'Height (cm)', hintText: "Enter height in cm"),
+                ),
+                TextField(
+                  controller: _weightController,
+                  decoration: const InputDecoration(
+                      labelText: 'Weight (kg)', hintText: "Enter weight in kg"),
+                ),
                 const Text('Update the details and press Confirm'),
               ],
             ),
@@ -258,12 +293,21 @@ class _ShowInfState extends State<ShowInf> {
   }
 
   void editData(int id) async {
+    double height = double.parse(_heightController.text) / 100;
+    double weight = double.parse(_weightController.text);
+    double bmi = weight / (height * height);
+    String bmiType = _getBmiType(bmi);
+
     Map data = {
       'id': id,
       'name': _nameController.text,
       'email': _emailController.text,
       'phone': _phoneController.text,
-      'address': _addressController.text
+      'address': _addressController.text,
+      'height': _heightController.text,
+      'weight': _weightController.text,
+      'bmi': bmi.toStringAsFixed(2),
+      'bmiType': bmiType
     };
     var body = jsonEncode(data);
     var response = await http.put(Uri.http('10.0.2.2:8080', 'update/$id'),
@@ -274,5 +318,17 @@ class _ShowInfState extends State<ShowInf> {
     print("Response status: ${response.statusCode}");
     print("Response body: ${response.body}");
     listData();
+  }
+
+  String _getBmiType(double bmi) {
+    if (bmi < 18.5) {
+      return 'Underweight';
+    } else if (bmi < 24.9) {
+      return 'Normal weight';
+    } else if (bmi < 29.9) {
+      return 'Overweight';
+    } else {
+      return 'Obesity';
+    }
   }
 }
