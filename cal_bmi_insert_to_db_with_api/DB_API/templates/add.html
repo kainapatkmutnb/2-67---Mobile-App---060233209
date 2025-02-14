@@ -2,32 +2,35 @@
 <html>
 <head>
     <title>Add User - Python Flask MySQL CRUD</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-    <h2>Add User</h2>
-    <form>
-        <dl>
-            <input name="inputName" id="iName" value="" type="text" placeholder="Name" autocomplete="off" required>
-            <p>
-                <input name="inputEmail" id="iEmail" value="" type="text" placeholder="Email" autocomplete="off" required>
-            </p>
-            <p>
-                <input name="inputPhone" id="iPhone" value="" type="text" placeholder="Phone" autocomplete="off" required>
-            </p>
-            <p>
-                <input name="inputaddress" id="iAddress" value="" type="text" placeholder="Address" autocomplete="off" required>
-            </p>
-            <p>
-                <input name="inputHeight" id="iHeight" value="" type="text" placeholder="Height (cm)" autocomplete="off" required>
-            </p>
-            <p>
-                <input name="inputWeight" id="iWeight" value="" type="text" placeholder="Weight (Kg)" autocomplete="off" required>
-            </p>
-        </dl>
-        <p>
-            <button type="button" onclick="ins_data()">Save</button>
-        </p>
-    </form>
+<body class="bg-blue-50 flex items-center justify-center min-h-screen">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h2 class="text-2xl font-bold mb-6 text-center text-blue-600">Add User</h2>
+        <form>
+            <div class="mb-4">
+                <input name="inputName" id="iName" value="" type="text" placeholder="Name" autocomplete="off" required class="w-full p-2 border border-blue-300 rounded">
+            </div>
+            <div class="mb-4">
+                <input name="inputEmail" id="iEmail" value="" type="text" placeholder="Email" autocomplete="off" required class="w-full p-2 border border-blue-300 rounded">
+            </div>
+            <div class="mb-4">
+                <input name="inputPhone" id="iPhone" value="" type="text" placeholder="Phone" autocomplete="off" required class="w-full p-2 border border-blue-300 rounded">
+            </div>
+            <div class="mb-4">
+                <input name="inputaddress" id="iAddress" value="" type="text" placeholder="Address" autocomplete="off" required class="w-full p-2 border border-blue-300 rounded">
+            </div>
+            <div class="mb-4">
+                <input name="inputHeight" id="iHeight" value="" type="text" placeholder="Height (cm)" autocomplete="off" required class="w-full p-2 border border-blue-300 rounded">
+            </div>
+            <div class="mb-4">
+                <input name="inputWeight" id="iWeight" value="" type="text" placeholder="Weight (Kg)" autocomplete="off" required class="w-full p-2 border border-blue-300 rounded">
+            </div>
+            <div class="text-center">
+                <button type="button" onclick="ins_data()" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Save</button>
+            </div>
+        </form>
+    </div>
     <script>
         async function ins_data() {
             const height = parseFloat(document.getElementById('iHeight').value);
