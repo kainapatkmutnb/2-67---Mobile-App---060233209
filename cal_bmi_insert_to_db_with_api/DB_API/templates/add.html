@@ -17,6 +17,12 @@
             <p>
                 <input name="inputaddress" id="iAddress" value="" type="text" placeholder="Address" autocomplete="off" required>
             </p>
+            <p>
+                <input name="inputHeight" id="iHeight" value="" type="text" placeholder="Height (cm)" autocomplete="off" required>
+            </p>
+            <p>
+                <input name="inputWeight" id="iWeight" value="" type="text" placeholder="Weight (Kg)" autocomplete="off" required>
+            </p>
         </dl>
         <p>
             <button type="button" onclick="ins_data()">Save</button>
@@ -24,6 +30,23 @@
     </form>
     <script>
         async function ins_data() {
+            const height = parseFloat(document.getElementById('iHeight').value);
+            const weight = parseFloat(document.getElementById('iWeight').value);
+            const bmi = (weight / ((height / 100) ** 2)).toFixed(2);
+            let bmiType = '';
+
+            if (bmi < 18.5) {
+                bmiType = 'Underweight';
+            } else if (bmi < 23) {
+                bmiType = 'Normal';
+            } else if (bmi < 25) {
+                bmiType = 'Risk to Overweight';
+            } else if (bmi < 30) {
+                bmiType = 'Overweight';
+            } else {
+                bmiType = 'Obese';
+            }
+
             const rawResponse = await fetch('/create', {
                 method: 'post',
                 headers: {
@@ -35,6 +58,10 @@
                     email: document.getElementById('iEmail').value,
                     phone: document.getElementById('iPhone').value,
                     address: document.getElementById('iAddress').value,
+                    height: height,
+                    weight: weight,
+                    bmi: bmi,
+                    bmiType: bmiType
                 })
             });
             const content = await rawResponse.json();
