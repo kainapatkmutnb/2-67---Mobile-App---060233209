@@ -90,6 +90,16 @@ class _ShowInfState extends State<ShowInf> {
                         'BMI Type: ${list[index]['bmiType']}',
                         style: TextStyle(fontSize: 14),
                       ),
+                      Text(
+                        _getWeightDifferenceMessage(
+                          double.parse(list[index]['height']),
+                          double.parse(list[index]['weight']),
+                        ),
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.blue,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ],
                   ),
                   leading: Text(
@@ -368,6 +378,31 @@ class _ShowInfState extends State<ShowInf> {
       return 'Overweight';
     } else {
       return 'Obese';
+    }
+  }
+
+  double _calculateIdealWeightLower(double heightCm) {
+    double heightM = heightCm / 100;
+    return 18.5 * (heightM * heightM);
+  }
+
+  double _calculateIdealWeightUpper(double heightCm) {
+    double heightM = heightCm / 100;
+    return 23 * (heightM * heightM);
+  }
+
+  String _getWeightDifferenceMessage(double heightCm, double currentWeight) {
+    double lowerIdealWeight = _calculateIdealWeightLower(heightCm);
+    double upperIdealWeight = _calculateIdealWeightUpper(heightCm);
+
+    if (currentWeight < lowerIdealWeight) {
+      double weightToGain = lowerIdealWeight - currentWeight;
+      return 'Need to gain ${weightToGain.toStringAsFixed(1)} kg to reach normal BMI';
+    } else if (currentWeight > upperIdealWeight) {
+      double weightToLose = currentWeight - upperIdealWeight;
+      return 'Need to lose ${weightToLose.toStringAsFixed(1)} kg to reach normal BMI';
+    } else {
+      return 'Weight is in normal range';
     }
   }
 }
