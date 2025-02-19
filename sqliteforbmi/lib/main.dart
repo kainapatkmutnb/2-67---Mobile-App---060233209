@@ -54,14 +54,14 @@ class UserListState extends State<UserList> {
 
   void _editUser(User user) {
     TextEditingController usernameController =
-        TextEditingController(text: user.username);
+    TextEditingController(text: user.username);
     TextEditingController emailController =
-        TextEditingController(text: user.email);
+    TextEditingController(text: user.email);
     TextEditingController pwdController = TextEditingController(text: user.pwd);
     TextEditingController weightController =
-        TextEditingController(text: user.weight.toString());
+    TextEditingController(text: user.weight.toString());
     TextEditingController heightController =
-        TextEditingController(text: user.height.toString());
+    TextEditingController(text: user.height.toString());
 
     showDialog(
       context: context,
