@@ -223,18 +223,16 @@ class UserListState extends State<UserList> {
         itemBuilder: (context, index) {
           final user = _users[index];
           return ListTile(
-            leading: Row(
-              mainAxisSize: MainAxisSize.min,
+            leading: Column(
               children: [
                 const Icon(
                   Icons.account_circle,
-                  color: Colors.cyan,
+                  color: Colors.cyanAccent,
                 ),
-                const SizedBox(width: 5), // Add some spacing between the icon and the image
                 Image.asset(
                   user.bmiImage,
-                  width: 40, // Adjusted width
-                  height: 40, // Adjusted height
+                  width: 50,
+                  height: 50,
                 ),
               ],
             ),
@@ -254,6 +252,14 @@ class UserListState extends State<UserList> {
                 Text("BMI: ${user.bmi}"),
                 const SizedBox(height: 5),
                 Text("BMI TYPE: ${user.bmiType}"),
+                const SizedBox(height: 5),
+                Text(
+                  user.getWeightAdjustment(),
+                  style: TextStyle(
+                    color: user.bmiType == 'Normal' ? Colors.green : Colors.red,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ],
             ),
             trailing: Row(
@@ -262,7 +268,7 @@ class UserListState extends State<UserList> {
                 IconButton(
                   icon: const Icon(Icons.edit),
                   onPressed: () => _editUser(user), // Edit action
-                  color: Colors.lightBlue,
+                  color: Colors.lightBlueAccent,
                 ),
                 IconButton(
                   icon: const Icon(Icons.delete),
