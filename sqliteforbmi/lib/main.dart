@@ -54,14 +54,14 @@ class UserListState extends State<UserList> {
 
   void _editUser(User user) {
     TextEditingController usernameController =
-        TextEditingController(text: user.username);
+    TextEditingController(text: user.username);
     TextEditingController emailController =
-        TextEditingController(text: user.email);
+    TextEditingController(text: user.email);
     TextEditingController pwdController = TextEditingController(text: user.pwd);
     TextEditingController weightController =
-        TextEditingController(text: user.weight.toString());
+    TextEditingController(text: user.weight.toString());
     TextEditingController heightController =
-        TextEditingController(text: user.height.toString());
+    TextEditingController(text: user.height.toString());
 
     showDialog(
       context: context,
@@ -222,54 +222,80 @@ class UserListState extends State<UserList> {
         itemCount: _users.length,
         itemBuilder: (context, index) {
           final user = _users[index];
-          return ListTile(
-            leading: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(
-                  Icons.account_circle,
-                  color: Colors.cyan,
-                ),
-                const SizedBox(width: 5), // Add some spacing between the icon and the image
-                Image.asset(
-                  user.bmiImage,
-                  width: 40, // Adjusted width
-                  height: 40, // Adjusted height
-                ),
-              ],
-            ),
-            title: Text("Username: ${user.username}"),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 5),
-                Text("Email: ${user.email}"),
-                const SizedBox(height: 5),
-                Text("Password: ${user.pwd}"),
-                const SizedBox(height: 5),
-                Text("Weight: ${user.weight} kg"),
-                const SizedBox(height: 5),
-                Text("Height: ${user.height} cm"),
-                const SizedBox(height: 5),
-                Text("BMI: ${user.bmi}"),
-                const SizedBox(height: 5),
-                Text("BMI TYPE: ${user.bmiType}"),
-              ],
-            ),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.edit),
-                  onPressed: () => _editUser(user), // Edit action
-                  color: Colors.lightBlue,
-                ),
-                IconButton(
-                  icon: const Icon(Icons.delete),
-                  onPressed: () => deleteUser(user.id!), // Delete action
-                  color: Colors.redAccent,
-                ),
-              ],
+          return Card(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  // Account circle icon at the start
+                  const Icon(
+                    Icons.account_circle,
+                    color: Colors.cyan,
+                    size: 24,
+                  ),
+                  const SizedBox(width: 10),
+                  // BMI image
+                  SizedBox(
+                    width: 35,
+                    height: 35,
+                    child: Image.asset(
+                      user.bmiImage,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  // Middle section - User details
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text("Username: ${user.username}"),
+                        const SizedBox(height: 5),
+                        Text("Email: ${user.email}"),
+                        const SizedBox(height: 5),
+                        Text("Password: ${user.pwd}"),
+                        const SizedBox(height: 5),
+                        Text("Weight: ${user.weight} kg"),
+                        const SizedBox(height: 5),
+                        Text("Height: ${user.height} cm"),
+                        const SizedBox(height: 5),
+                        Text("BMI: ${user.bmi}"),
+                        const SizedBox(height: 5),
+                        Text("BMI TYPE: ${user.bmiType}"),
+                        const SizedBox(height: 5),
+                        Text(
+                          user.getWeightAdjustment(),
+                          style: TextStyle(
+                            color: user.bmiType == 'Normal'
+                                ? Colors.green
+                                : Colors.red,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  // Right side - Action Icons
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.edit),
+                        onPressed: () => _editUser(user),
+                        color: Colors.lightBlueAccent,
+                        iconSize: 20,
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.delete),
+                        onPressed: () => deleteUser(user.id!),
+                        color: Colors.redAccent,
+                        iconSize: 20,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           );
         },

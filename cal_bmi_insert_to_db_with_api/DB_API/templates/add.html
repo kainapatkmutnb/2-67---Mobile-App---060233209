@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add User - BMI Calculator</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-blue-50 flex items-center justify-center min-h-screen">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h2 class="text-2xl font-bold mb-6 text-center text-blue-600">Add User</h2>
+        <form>
+            <div class="mb-4">
+                <input name="inputName" id="iName" value="" type="text" placeholder="Name" autocomplete="off" required class="w-full p-2 border border-blue-300 rounded">
+            </div>
+            <div class="mb-4">
+                <input name="inputEmail" id="iEmail" value="" type="text" placeholder="Email" autocomplete="off" required class="w-full p-2 border border-blue-300 rounded">
+            </div>
+            <div class="mb-4">
+                <input name="inputPhone" id="iPhone" value="" type="text" placeholder="Phone" autocomplete="off" required class="w-full p-2 border border-blue-300 rounded">
+            </div>
+            <div class="mb-4">
+                <input name="inputaddress" id="iAddress" value="" type="text" placeholder="Address" autocomplete="off" required class="w-full p-2 border border-blue-300 rounded">
+            </div>
+            <div class="mb-4">
+                <input name="inputHeight" id="iHeight" value="" type="text" placeholder="Height (cm)" autocomplete="off" required class="w-full p-2 border border-blue-300 rounded">
+            </div>
+            <div class="mb-4">
+                <input name="inputWeight" id="iWeight" value="" type="text" placeholder="Weight (Kg)" autocomplete="off" required class="w-full p-2 border border-blue-300 rounded">
+            </div>
+            <div class="text-center">
+                <button type="button" onclick="ins_data()" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Save</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        async function ins_data() {
+            const height = parseFloat(document.getElementById('iHeight').value);
+            const weight = parseFloat(document.getElementById('iWeight').value);
+            const bmi = (weight / ((height / 100) ** 2)).toFixed(2);
+            let bmiType = '';
+
+            if (bmi < 18.5) {
+                bmiType = 'Underweight';
+            } else if (bmi < 23) {
+                bmiType = 'Normal';
+            } else if (bmi < 25) {
+                bmiType = 'Risk to Overweight';
+            } else if (bmi < 30) {
+                bmiType = 'Overweight';
+            } else {
+                bmiType = 'Obese';
+            }
+
+            const rawResponse = await fetch('/create', {
+                method: 'post',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: document.getElementById('iName').value,
+                    email: document.getElementById('iEmail').value,
+                    phone: document.getElementById('iPhone').value,
+                    address: document.getElementById('iAddress').value,
+                    height: height,
+                    weight: weight,
+                    bmi: bmi,
+                    bmiType: bmiType
+                })
+            });
+            const content = await rawResponse.json();
+            console.log(content);
+            alert('User data has been saved successfully!');
+        }
+    </script>
+</body>
+</html>

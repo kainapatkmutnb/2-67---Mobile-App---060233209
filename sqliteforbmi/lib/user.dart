@@ -19,7 +19,8 @@ class User {
     required this.height,
   })  : bmi = calculateBmi(weight, height),
         bmiType = determineBmiType(calculateBmi(weight, height)),
-        bmiImage = determineBmiImage(calculateBmi(weight, height)); // Auto-assign BMI Image
+        bmiImage = determineBmiImage(
+            calculateBmi(weight, height)); // Auto-assign BMI Image
 
   // BMI Calculation
   static double calculateBmi(double weight, double height) {
@@ -53,6 +54,27 @@ class User {
       return 'images/bmi-4.png';
     } else {
       return 'images/bmi-5.png';
+    }
+  }
+
+  // Calculate target weight for normal BMI
+  double getTargetWeight() {
+    // Using BMI 21 (middle of normal range 18.5-23)
+    double heightInMeters = height / 100;
+    return 21 * (heightInMeters * heightInMeters);
+  }
+
+  // Calculate weight adjustment needed
+  String getWeightAdjustment() {
+    double targetWeight = getTargetWeight();
+    double difference = targetWeight - weight;
+
+    if (bmi >= 18.5 && bmi < 23) {
+      return "Your weight is normal";
+    } else if (difference > 0) {
+      return "Need to gain ${difference.toStringAsFixed(1)} kg";
+    } else {
+      return "Need to lose ${(-difference).toStringAsFixed(1)} kg";
     }
   }
 

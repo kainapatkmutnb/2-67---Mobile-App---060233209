@@ -1,0 +1,2 @@
+C:/Users/Kainapxt/Desktop/2-67---Mobile-App---060233209/create_api_crud_mysql_db/android/app/.cxx/Debug/gh6e6vi6/x86/CMakeFiles/edit_cache.dir
+C:/Users/Kainapxt/Desktop/2-67---Mobile-App---060233209/create_api_crud_mysql_db/android/app/.cxx/Debug/gh6e6vi6/x86/CMakeFiles/rebuild_cache.dir
