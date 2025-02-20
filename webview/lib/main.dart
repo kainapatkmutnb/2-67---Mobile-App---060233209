@@ -1,69 +1,61 @@
 import 'package:flutter/material.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() => runApp(
+    const MaterialApp(home: WebViewExample(), debugShowCheckedModeBanner: false),
+);
+
+class WebViewExample extends StatefulWidget {
+    const WebViewExample({super.key});
+
+    @override
+    State<WebViewExample> createState() => _WebViewExampleState();
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class _WebViewExampleState extends State<WebViewExample> {
+    late final WebViewController _controller;
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
+    @override
+    void initState() {
+        super.initState();
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+        // Initialize WebView
+        _controller = WebViewController()
+          ..setJavaScriptMode(JavaScriptMode.unrestricted)
+          ..loadRequest(Uri.parse('https://kmutnb.ac.th'));
+    }
 
-  final String title;
+    void _loadUrl(String url) {
+        _controller.loadRequest(Uri.parse(url));
+    }
 
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+    @override
+    Widget build(BuildContext context) {
+        return Scaffold(
+            appBar: AppBar(title: const Text('Flutter WebView Example')),
+            body: Column(
+                children: [
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                            ElevatedButton(
+                                onPressed: () {
+                                    _loadUrl('https://kmutnb.ac.th');
+                                },
+                                child: const Text('Go to KMUTNB'),
+                            ),
+                            const SizedBox(width: 10),
+                            ElevatedButton(
+                                onPressed: () {
+                                    _loadUrl('https://flutter.dev');
+                                },
+                                child: const Text('Go to Flutter'),
+                            ),
+                        ],
+                    ),
+                    Expanded(child: WebViewWidget(controller: _controller)),
+                ],
             ),
-          ],
-        ),
-      ),
-
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
-    );
-  }
+        );
+    }
 }
