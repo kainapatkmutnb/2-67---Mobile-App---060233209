@@ -7,7 +7,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
 }
 
 class GameScreen extends StatefulWidget {
-  const GameScreen({Key? key}) : super(key: key);
+  const GameScreen({super.key});
 
   @override
   State<GameScreen> createState() => _GameScreenState();
@@ -35,7 +35,7 @@ class GameScreen extends StatefulWidget {
 class _GameScreenState extends State<GameScreen> {
   double ballX = 0;
   double ballY = 0;
-  double ballSpeed = 5.0;
+  double ballSpeed = 15.0;
   double ballSize = 30.0;
   double targetX = 0;
   double targetY = 0;
@@ -59,7 +59,7 @@ class _GameScreenState extends State<GameScreen> {
       ballY = maxY / 2;
       gameFinished = false;
       targetX = random.nextDouble() * (maxX - targetSize * 2) + targetSize;
-      targetY = random.nextDouble() * (maxY - targetSize * 4) + targetSize;
+      targetY = random.nextDouble() * (maxY / 3) + targetSize;
     });
   }
 
@@ -67,19 +67,18 @@ class _GameScreenState extends State<GameScreen> {
     double dx = ballX - targetX;
     double dy = ballY - targetY;
     double distance = sqrt(dx * dx + dy * dy);
-
     if (distance < (ballSize + targetSize) / 2) {
       if (!gameFinished) {
         setState(() {
           gameFinished = true;
         });
-
         showDialog(
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
               title: const Text('Congratulations!'),
-              content: Text('You reached the target at X: ${targetX.toStringAsFixed(1)}, Y: ${targetY.toStringAsFixed(1)}'),
+              content: Text(
+                  'You hit the target at X: ${targetX.toStringAsFixed(1)}, Y: ${targetY.toStringAsFixed(1)}'),
               actions: [
                 TextButton(
                   onPressed: () {
@@ -98,7 +97,6 @@ class _GameScreenState extends State<GameScreen> {
 
   void updateBallPosition(double x, double y) {
     if (gameFinished) return;
-
     setState(() {
       ballX += x * ballSpeed;
       ballY += y * ballSpeed;
@@ -112,8 +110,7 @@ class _GameScreenState extends State<GameScreen> {
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     maxX = screenSize.width;
-    maxY = screenSize.height - 200;
-
+    maxY = screenSize.height - 100;
     return Stack(
       children: [
         Positioned(
@@ -146,7 +143,7 @@ class _GameScreenState extends State<GameScreen> {
           left: 10,
           child: Container(
             padding: const EdgeInsets.all(8),
-            color: Colors.black54,
+            color: Colors.black38,
             child: Text(
               'Ball: X: ${ballX.toStringAsFixed(1)}, Y: ${ballY.toStringAsFixed(1)}\n'
               'Target: X: ${targetX.toStringAsFixed(1)}, Y: ${targetY.toStringAsFixed(1)}',
@@ -158,8 +155,12 @@ class _GameScreenState extends State<GameScreen> {
           top: 10,
           right: 10,
           child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.blue.withAlpha((0.7 * 255).toInt()),
+            ),
             onPressed: resetGame,
-            child: const Text('Reset Game'),
+            child:
+                const Text('Reset Game', style: TextStyle(color: Colors.white)),
           ),
         ),
         Positioned(
