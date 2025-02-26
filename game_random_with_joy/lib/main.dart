@@ -14,9 +14,11 @@ class JoystickExampleApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Joystick Example'),
+          title: const Text('Game Random - with JoyStick'),
+          centerTitle: true,
         ),
         body: const MainPage(),
       ),
@@ -495,4 +497,4 @@ class Ball extends StatelessWidget {
       ),
     );
   }
-}
+}}
