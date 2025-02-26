@@ -19,6 +19,7 @@ class JoystickExampleApp extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Game Random - with JoyStick'),
           centerTitle: true,
+          backgroundColor: Colors.lightBlue.shade100, // pastel blue color
         ),
         body: const MainPage(),
       ),
