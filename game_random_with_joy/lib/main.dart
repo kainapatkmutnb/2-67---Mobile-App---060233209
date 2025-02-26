@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_joystick/flutter_joystick.dart';
+import 'dart:math';
 
 void main() {
   runApp(const JoystickExampleApp());
@@ -19,7 +20,7 @@ class JoystickExampleApp extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Game Random - with JoyStick'),
           centerTitle: true,
-          backgroundColor: Colors.lightBlue.shade100, // pastel blue color
+          backgroundColor: Colors.lightBlue.shade100,
         ),
         body: const MainPage(),
       ),
@@ -101,6 +102,15 @@ class _JoystickExampleState extends State<JoystickExample> {
     super.didChangeDependencies();
   }
 
+  void _resetGame() {
+    setState(() {
+      _x = Random().nextDouble() *
+          (MediaQuery.of(context).size.width - ballSize);
+      _y = Random().nextDouble() *
+          (MediaQuery.of(context).size.height - ballSize);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -132,6 +142,14 @@ class _JoystickExampleState extends State<JoystickExample> {
                     _y = _y + step * details.y;
                   });
                 },
+              ),
+            ),
+            Positioned(
+              bottom: 50,
+              right: 20,
+              child: ElevatedButton(
+                onPressed: _resetGame,
+                child: const Text('Reset Game'),
               ),
             ),
           ],
