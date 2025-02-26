@@ -76,7 +76,7 @@ class _GameScreenState extends State<GameScreen> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: const Text('Congratulations!'),
+              title: const Text('WINNING!!!'),
               content: Text(
                   'You hit the target at X: ${targetX.toStringAsFixed(1)}, Y: ${targetY.toStringAsFixed(1)}'),
               actions: [
