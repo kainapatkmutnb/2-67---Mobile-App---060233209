@@ -15,7 +15,7 @@ class _Page1State extends State<Page1> {
       appBar: AppBar(
         backgroundColor: Colors.deepPurple,
         title: const Text(
-          'Firebase24',
+          'Firebase25',
           style: TextStyle(color: Colors.white),
         ),
       ),
