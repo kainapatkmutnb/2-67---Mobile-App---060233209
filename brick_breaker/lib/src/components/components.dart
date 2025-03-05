@@ -1,2 +1,3 @@
-export 'ball.dart';       // Add this export
+export 'ball.dart';
+export 'bat.dart';
 export 'play_area.dart';
