@@ -1,0 +1,37 @@
+name: restaurant_menu_management
+description: A Flutter Restaurant Menu Management app with Firebase.
+publish_to: 'none'
+version: 1.0.0+1
+
+# SDK Configuration
+environment:
+  sdk: ^3.7.0
+
+# App Dependencies
+dependencies:
+  flutter:
+    sdk: flutter
+  firebase_core: ^3.12.1
+  firebase_auth: ^5.5.1
+  cloud_firestore: ^5.6.5
+
+# Development Dependencies
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+# Flutter Configuration
+flutter:
+  uses-material-design: true
+
+  # assets:
+  #   - images/a_dot_burr.jpeg
+  #   - images/a_dot_ham.jpeg
+
+  # fonts:
+  #   - family: Schyler
+  #     fonts:
+  #       - asset: fonts/Schyler-Regular.ttf
+  #       - asset: fonts/Schyler-Italic.ttf
+  #         style: italic
