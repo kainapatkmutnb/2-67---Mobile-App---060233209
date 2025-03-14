@@ -19,11 +19,12 @@ class DefaultFirebaseOptions {
     if (kIsWeb) {
       return web;
     }
+
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        return ios;
+        return ios; 
       case TargetPlatform.macOS:
         return macos;
       case TargetPlatform.windows:

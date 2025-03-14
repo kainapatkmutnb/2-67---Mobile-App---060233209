@@ -11,7 +11,7 @@ plugins {
 android {
     namespace = "com.example.restaurant_menu_management"
     compileSdk = 34
-    ndkVersion = "27.0.12077973"
+    ndkVersion = flutter.ndkVersion
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
